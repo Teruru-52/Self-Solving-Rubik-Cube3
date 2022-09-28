@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import knn
+from algorithm import knn
 
 class ColorState:
     def __init__(self, cc, ec):
@@ -10,11 +10,6 @@ class ColorState:
 color_state = ColorState(
     [['','',''], ['','',''], ['','',''], ['','',''], ['','',''], ['','',''], ['','',''], ['','','']],
     [['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['','']]
-)
-
-correct_state = ColorState(
-    [['','',''], ['','',''], ['','O','B'], ['','',''], ['','',''], ['O','',''], ['B','Y','R'], ['','','']],
-    [['',''], ['',''], ['B','O'], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['O','G'], ['Y','B'], ['','']]
 )
 
 def Set_color_state(color, camera_no, index):
@@ -72,10 +67,10 @@ def Set_color_state(color, camera_no, index):
 
 k_nn = knn.K_NN(k = 1) 
 training_red = [[5.64, 164.77, 155.87]]
-training_blue = [[107.05, 144.05, 220.48], [104.81, 179.99, 89.31], [105.99, 156.25, 188.84], [106.970625, 145.05375, 231.868125]]
+training_blue = [[107.05, 144.05, 220.48], [104.81, 179.99, 89.31]]
 training_green = [[55.04, 78.68, 151.31]]
-training_orenge = [[7.94, 136.29, 254.84], [5.99375, 150.715, 254.775], [9.1575, 163.935, 168.3375], [11.07, 169.22, 155.98]]
-training_yellow = [[35.15, 75.04, 254.41], [34.06, 63.27, 189.34]]
+training_orenge = [[7.94, 136.29, 254.84], [34.06, 63.27, 189.34]]
+training_yellow = [[35.15, 75.04, 254.41], [11.07, 169.22, 155.98]]
 training_data = training_red + training_blue + training_green + training_orenge + training_yellow
 label = ['R' for i in range(len(training_red))] + \
         ['B' for i in range(len(training_blue))] + \
@@ -102,7 +97,7 @@ class Camera:
         # print("Saturation: %.2f" % (s))
         # print("Value: %.2f" % (v))
         hsv = [h, s, v]
-        # print(list(map(round, hsv, [2]*len(hsv))))
+        print(list(map(round, hsv, [2]*len(hsv))))
 
         return [h, s, v]
 
@@ -133,22 +128,28 @@ class Camera:
             cv2.rectangle(img, (self.xy[i][0], self.xy[i][1]), (self.xy[i][0]+lateral, self.xy[i][1]+lateral), (255, 0, 0), thickness=4)
 
         print("cc = ", color_state.cc)
-        print("ccc = ", correct_state.cc)
         print("ec = ", color_state.ec)
-        print("cec = ", correct_state.ec)
         cv2.imwrite('picture/result.jpg', img)
 
-def Get_color_state():
-    return color_state
+    # def Take_picture(self):
 
 xy_camera1 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 330], [525, 450],
               [360, 380], [400, 490], [690, 380], [650, 490], [710, 515]]
 
-#main
-if __name__ == '__main__':
-    try:
-        camera1 = Camera(xy_camera1, 1)
-        camera1.camera2color_state()
+camera1 = Camera(xy_camera1, 1)
+# camera2 = Camera(xy_camera1, 2)
+# camera3 = Camera(xy_camera3, 3)
+# camera4 = Camera(xy_camera3, 4)
 
-    except KeyboardInterrupt:
-        pass
+# def Take_pictures():
+#     camera1.Take_picture()
+#     camera2.Take_picture()
+#     camera3.Take_picture()
+#     camera4.Take_picture()
+
+def Get_color_state():
+#     camera1.camera2color_state()
+#     camera2.camera2color_state()
+#     camera3.camera2color_state()
+#     camera4.camera2color_state()
+    return color_state
