@@ -1,5 +1,5 @@
 import time 
-import state
+from algorithm import state
 
 from tables import co_table
 from tables import eo_table

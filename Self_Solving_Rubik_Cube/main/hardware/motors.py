@@ -1,4 +1,4 @@
-import a4988
+from hardware import a4988
 import RPi.GPIO as GPIO
 from time import sleep
 

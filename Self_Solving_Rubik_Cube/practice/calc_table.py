@@ -1,5 +1,4 @@
 import time 
-import state
 import codecs
 
 NUM_CORNERS = 8
@@ -14,29 +13,50 @@ NUM_CP = 40320  # 8!
 NUM_UD_EP = 40320  # 8!
 NUM_E_EP = 24  # 4!
 
+class State:
+    """
+    ルービックキューブの状態を表すクラス
+    """
+
+    def __init__(self, cp, co, ep, eo):
+        self.cp = cp
+        self.co = co
+        self.ep = ep
+        self.eo = eo
+
+    def apply_move(self, move):
+        """
+        操作を適用し、新しい状態を返す
+        """
+        new_cp = [self.cp[p] for p in move.cp]
+        new_co = [(self.co[p] + move.co[i]) % 3 for i, p in enumerate(move.cp)]
+        new_ep = [self.ep[p] for p in move.ep]
+        new_eo = [(self.eo[p] + move.eo[i]) % 2 for i, p in enumerate(move.ep)]
+        return State(new_cp, new_co, new_ep, new_eo)
+
 # 18種類の1手操作を全部定義する
 moves = {
-    'U': state.State([3, 0, 1, 2, 4, 5, 6, 7],
+    'U': State([3, 0, 1, 2, 4, 5, 6, 7],
                [0, 0, 0, 0, 0, 0, 0, 0],
                [0, 1, 2, 3, 7, 4, 5, 6, 8, 9, 10, 11],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    'D': state.State([0, 1, 2, 3, 5, 6, 7, 4],
+    'D': State([0, 1, 2, 3, 5, 6, 7, 4],
                [0, 0, 0, 0, 0, 0, 0, 0],
                [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 8],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    'L': state.State([4, 1, 2, 0, 7, 5, 6, 3],
+    'L': State([4, 1, 2, 0, 7, 5, 6, 3],
                [2, 0, 0, 1, 1, 0, 0, 2],
                [11, 1, 2, 7, 4, 5, 6, 0, 8, 9, 10, 3],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    'R': state.State([0, 2, 6, 3, 4, 1, 5, 7],
+    'R': State([0, 2, 6, 3, 4, 1, 5, 7],
                [0, 1, 2, 0, 0, 2, 1, 0],
                [0, 5, 9, 3, 4, 2, 6, 7, 8, 1, 10, 11],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    'F': state.State([0, 1, 3, 7, 4, 5, 2, 6],
+    'F': State([0, 1, 3, 7, 4, 5, 2, 6],
                [0, 0, 1, 2, 0, 0, 2, 1],
                [0, 1, 6, 10, 4, 5, 3, 7, 8, 9, 2, 11],
                [0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0]),
-    'B': state.State([1, 5, 2, 3, 0, 4, 6, 7],
+    'B': State([1, 5, 2, 3, 0, 4, 6, 7],
                [1, 2, 0, 0, 2, 1, 0, 0],
                [4, 8, 2, 3, 1, 5, 6, 7, 0, 9, 10, 11],
                [1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0]
@@ -182,7 +202,7 @@ def index_to_e_ep(index):
 # start = time.time()
 # co_move_table = [[0] * len(move_names) for _ in range(NUM_CO)]
 # for i in range(NUM_CO):
-#     state_ = state.State(
+#     state_ = State(
 #         [0] * 8,
 #         index_to_co(i),
 #         [0] * 12,
@@ -201,7 +221,7 @@ def index_to_e_ep(index):
 # start = time.time()
 # eo_move_table = [[0] * len(move_names) for _ in range(NUM_EO)]
 # for i in range(NUM_EO):
-#     state_ = state.State(
+#     state_ = State(
 #         [0] * 8,
 #         [0] * 8,
 #         [0] * 12,
@@ -218,7 +238,7 @@ def index_to_e_ep(index):
 # start = time.time()
 # e_combination_table = [[0] * len(move_names) for _ in range(NUM_E_COMBINATIONS)]
 # for i in range(NUM_E_COMBINATIONS):
-#     state_ = state.State(
+#     state_ = State(
 #         [0] * 8,
 #         [0] * 8,
 #         index_to_e_combination(i),
@@ -238,7 +258,7 @@ move_names_ph2 = ["U", "U2", "U'", "D", "D2", "D'", "L2", "R2", "F2", "B2"]
 # cp_move_table = [[0] * len(move_names_ph2) for _ in range(NUM_CP)]
 # start = time.time()
 # for i in range(NUM_CP):
-#     state_ = state.State(
+#     state_ = State(
 #         index_to_cp(i),
 #         [0] * 8,
 #         [0] * 12,
@@ -255,7 +275,7 @@ print("Computing ud_ep_move_table")
 ud_ep_move_table = [[0] * len(move_names_ph2) for _ in range(NUM_UD_EP)]
 start = time.time()
 for i in range(NUM_UD_EP):
-    state_ = state.State(
+    state_ = State(
         [0] * 8,
         [0] * 8,
         [0] * 4 + index_to_ud_ep(i),
@@ -272,7 +292,7 @@ print("Computing e_edge_permutation_move_table")
 e_ep_move_table = [[0] * len(move_names_ph2) for _ in range(NUM_E_EP)]
 start = time.time()
 for i in range(NUM_E_EP):
-    state_ = state.State(
+    state_ = State(
         [0] * 8,
         [0] * 8,
         index_to_e_ep(i) + [0] * 8,

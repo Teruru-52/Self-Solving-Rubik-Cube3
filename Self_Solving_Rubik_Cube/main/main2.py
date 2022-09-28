@@ -2,9 +2,9 @@ import random
 from shutil import move
 import time 
 from time import sleep
-import motors
-import state
-import search
+from hardware import motors
+from algorithm import state
+from algorithm import search
 
 """main関数"""
 if __name__ == '__main__':
