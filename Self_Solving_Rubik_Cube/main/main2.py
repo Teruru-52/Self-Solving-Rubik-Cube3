@@ -10,10 +10,27 @@ from algorithm import detect_color
 
 """main関数"""
 if __name__ == '__main__':
+  try:
+    """完成状態の設定"""
+    # checker2とTはうまくいってない
+    # checker2はおそらくモータの回転不具合
+    # cubeincube，mini_cubeincube，vortex，vertex_stripeは未検証
+    mode = 'normal'
+    # mode = 'checker'
+    # mode = 'checker2'
+    # mode = 'heso'
+    # mode = 'H'
+    mode = 'T'
+    # mode = 'cubeincube'
+    # mode = 'mini_cubeincube'
+    # mode = 'vortex'
+    # mode = 'vertex_stripe'
+
     """scrambleの生成"""
+    state.Set_solved_state(mode)
     scramble_length = 20
     random_scramble = state.Create_scramble(scramble_length)
-    print("random_scramble = ", random_scramble)
+    print("random_scramble: ", random_scramble)
 
     # """Webcamで撮影した画像からstateを求める"""
     # color_state = detect_color.Get_color_state()
@@ -54,4 +71,7 @@ if __name__ == '__main__':
     start = time.time()
     motor.Solve(solution)
     print(f"Solving Finished! ({time.time() - start:.5f} sec.)")
+    motor.Cleanup()
+    
+  except KeyboardInterrupt:
     motor.Cleanup()

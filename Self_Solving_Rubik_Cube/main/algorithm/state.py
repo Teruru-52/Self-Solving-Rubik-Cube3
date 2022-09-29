@@ -32,6 +32,41 @@ solved_state = State(
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 )
 
+# 完成状態の変更 (random_scrambleにのみ適用)
+def Set_solved_state(mode):
+    print("mode: ", mode)
+    if mode == 'checker':
+        solved_state.ep = [2, 3, 0, 1, 10, 11, 8, 9, 6, 7, 4, 5]
+    elif mode == 'checker2':
+        solved_state.cp = [7, 6, 5, 4, 3, 2, 1, 0]
+    elif mode == 'heso':
+        solved_state.cp = [5, 6, 2, 1, 4, 7, 3, 0]
+        solved_state.co = [2, 1, 2, 1, 1, 2, 1, 2]
+        solved_state.ep = [8, 10, 6, 4, 9, 2, 5, 1, 11, 3, 7, 0]
+        solved_state.eo = [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1]
+    elif mode == 'H':
+        solved_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
+    elif mode == 'T':
+        solved_state.cp = [5, 6, 2, 1, 4, 7, 3, 0]
+        solved_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
+    elif mode == 'cubeincube':
+        solved_state.cp = [2, 1, 5, 6, 3, 0, 4, 7]
+        solved_state.co = [2, 0, 2, 1, 1, 2, 1, 0]
+        solved_state.ep = [6, 1, 8, 3, 4, 5, 9, 2, 7, 0, 10, 11]
+        solved_state.eo = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0]
+    elif mode == 'mini_cubeincube':
+        solved_state.co = [0, 1, 0, 0, 0, 0, 0, 2]
+    elif mode == 'vortex': 
+        solved_state.cp = [2, 1, 5, 6, 3, 0, 4, 7]
+        solved_state.co = [2, 0, 2, 1, 1, 2, 1, 0]
+        solved_state.ep = [6, 5, 8, 11, 1, 4, 9, 2, 7, 0, 3, 11]
+        solved_state.eo = [0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0]
+    elif mode == 'vertical_stripe':
+        solved_state.cp = [1, 0, 3, 2, 5, 4, 7, 6]
+        solved_state.ep = [1, 0, 3, 2, 4, 5, 6, 7, 8, 9, 10, 11]
+        solved_state.eo = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+
+
 # 18種類の1手操作を全部定義する
 moves = {
     'U': State([3, 0, 1, 2, 4, 5, 6, 7],
