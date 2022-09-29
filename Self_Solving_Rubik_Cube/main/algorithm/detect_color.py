@@ -12,6 +12,7 @@ color_state = ColorState(
     [['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['','']]
 )
 
+# 要求する完成状態に合わせてここを場合分けする
 def Set_color_state(color, camera_no, index):
     if camera_no == 1:
         if index == 0:
