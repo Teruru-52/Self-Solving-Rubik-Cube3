@@ -14,7 +14,7 @@ color_state = ColorState(
 
 # 要求する完成状態に合わせてここを場合分けする
 def Set_color_state(color, camera_no, index):
-    if camera_no == 1:
+    if camera_no == 0:
         if index == 0:
             color_state.cc[2][2] = color
         elif index == 1:
@@ -110,7 +110,7 @@ class Camera:
         return color
 
     def camera2color_state(self):
-        img = cv2.imread('picture/001.jpg')
+        img = cv2.imread(f'picture/webcam{self.cam_no}.jpg')
 
         lateral = 40        
         for i in range(12):
@@ -130,27 +130,41 @@ class Camera:
 
         print("cc = ", color_state.cc)
         print("ec = ", color_state.ec)
-        cv2.imwrite('picture/result.jpg', img)
+        cv2.imwrite(f'picture/webcam{self.cam_no}.jpg', img)
 
-    # def Take_picture(self):
+    def Take_picture(self):
+        capture = cv2.VideoCapture(self.cam_no) # /dev/video*
+        capture.set(cv2.CAP_PROP_FPS, 10)
+        while True:
+            if(capture.isOpened()): # Open
+                retval, image = capture.read()
+                if retval is False:
+                    raise IOError
+                text = 'WIDTH={:.0f} HEIGHT={:.0f} FPS={:.0f}'.format(capture.get(cv2.CAP_PROP_FRAME_WIDTH),capture.get(cv2.CAP_PROP_FRAME_HEIGHT),capture.get(cv2.CAP_PROP_FPS))
+                cv2.putText(image, text, (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1, 4)
+                # cv2.imshow(f'Webcam{self.cam_no}', image)
+                cv2.imwrite(f'picture/webcam{self.cam_no}.jpg', image)
+                capture.release ()
+                cv2.destroyAllWindows()
+                break
 
-xy_camera1 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 330], [525, 450],
+xy_camera0 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 330], [525, 450],
               [360, 380], [400, 490], [690, 380], [650, 490], [710, 515]]
 
-camera1 = Camera(xy_camera1, 1)
-# camera2 = Camera(xy_camera1, 2)
-# camera3 = Camera(xy_camera3, 3)
-# camera4 = Camera(xy_camera3, 4)
+camera0 = Camera(xy_camera0, 0)
+camera2 = Camera(xy_camera0, 2)
+camera4 = Camera(xy_camera0, 4)
+camera6 = Camera(xy_camera0, 6)
 
-# def Take_pictures():
-#     camera1.Take_picture()
-#     camera2.Take_picture()
-#     camera3.Take_picture()
-#     camera4.Take_picture()
+def Take_pictures():
+    camera0.Take_picture()
+    camera2.Take_picture()
+    camera4.Take_picture()
+    camera6.Take_picture()
 
 def Get_color_state():
-#     camera1.camera2color_state()
+    # camera0.camera2color_state()
 #     camera2.camera2color_state()
-#     camera3.camera2color_state()
 #     camera4.camera2color_state()
+#     camera6.camera2color_state()
     return color_state

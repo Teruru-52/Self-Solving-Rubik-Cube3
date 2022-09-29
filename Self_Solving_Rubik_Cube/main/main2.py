@@ -20,7 +20,7 @@ if __name__ == '__main__':
     # mode = 'checker2'
     # mode = 'heso'
     # mode = 'H'
-    mode = 'T'
+    # mode = 'T'
     # mode = 'cubeincube'
     # mode = 'mini_cubeincube'
     # mode = 'vortex'
@@ -32,7 +32,8 @@ if __name__ == '__main__':
     random_scramble = state.Create_scramble(scramble_length)
     print("random_scramble: ", random_scramble)
 
-    # """Webcamで撮影した画像からstateを求める"""
+    # """Webcamで画像を撮影し，stateを求める"""
+    detect_color.Take_pictures()
     # color_state = detect_color.Get_color_state()
     # random_scramble = state.color2state(color_state)
     # print("random_scramble = ", random_scramble)
