@@ -54,21 +54,45 @@ if __name__ == '__main__':
     motor_B = A4988(Pin_dir=9, Pin_step=11, Pin_enable = 8)
 
     try:
-        # motor_U.Step_CW(50)
-        # motor_D.Step_CW(50)
-        # motor_L.Step_CW(50)
-        # motor_R.Step_CW(50)
-        motor_F.Step_CW(50)
-        # motor_B.Step_CW(50)
+        for _ in range(4):
+            motor_F.Step_CW(50)
+        for _ in range(2):
+            motor_F.Step_CCW(100)
 
-        sleep(0.2)
+        sleep(0.5)
 
-        # motor_B.Step_CCW(50)
-        # motor_F.Step_CCW(50)
-        # motor_R.Step_CCW(50)
-        # motor_L.Step_CCW(50)
-        # motor_D.Step_CCW(50)
-        # motor_U.Step_CCW(50)
+        for _ in range(4):
+            motor_B.Step_CW(50)
+        for _ in range(2):
+            motor_B.Step_CCW(100)
+
+        sleep(0.5)
+
+        for _ in range(4):
+            motor_U.Step_CW(50)
+        for _ in range(2):
+            motor_U.Step_CCW(100)
+
+        sleep(0.5)
+
+        for _ in range(4):
+            motor_D.Step_CW(50)
+        for _ in range(2):
+            motor_D.Step_CCW(100)
+
+        sleep(0.5)
+
+        for _ in range(4):
+            motor_R.Step_CW(50)
+        for _ in range(2):
+            motor_R.Step_CCW(100)
+
+        sleep(0.5)
+
+        for _ in range(4):
+            motor_L.Step_CW(50)
+        for _ in range(2):
+            motor_L.Step_CCW(100)
 
     except KeyboardInterrupt  :         #Ctl+Cが押されたらループを終了
         print("\nCtl+C")
