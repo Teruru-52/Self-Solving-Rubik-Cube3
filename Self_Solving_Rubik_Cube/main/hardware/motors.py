@@ -21,9 +21,9 @@ class Motor:
                 self.motor_U.Step_CW(100)
 
             elif move_name == "D":
-                self.motor_D.Step_CW(50)
+                self.motor_D.Step_CW(52)
             elif move_name == "D'":
-                self.motor_D.Step_CCW(50)
+                self.motor_D.Step_CCW(51)
             elif move_name == "D2":
                 self.motor_D.Step_CW(100)
 

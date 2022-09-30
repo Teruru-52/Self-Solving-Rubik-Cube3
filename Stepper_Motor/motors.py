@@ -25,13 +25,13 @@ class Motor:
 
             elif move_name == "D":
                 # print("D")
-                self.motor_D.Step_CW(50)
+                self.motor_D.Step_CW(52)
             elif move_name == "D'":
                 # print("D'")
-                self.motor_D.Step_CCW(50)
+                self.motor_D.Step_CCW(51)
             elif move_name == "D2":
                 # print("D2")
-                self.motor_D.Step_CW(100)
+                self.motor_D.Step_CW(102)
 
             elif move_name == "L":
                 # print("L")
