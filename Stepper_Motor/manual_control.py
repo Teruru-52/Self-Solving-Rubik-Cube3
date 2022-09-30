@@ -25,7 +25,7 @@ if __name__ == '__main__':
                 motor.Solve("F2")
             elif move == 'h':
                 motor.Solve("F'")
-            elif move == 'f':
+            elif move == 'b':
                 motor.Solve("B")
             elif move == 'n':
                 motor.Solve("B2")
