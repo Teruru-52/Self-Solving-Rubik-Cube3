@@ -1,5 +1,8 @@
 Self_Solving_Rubik_Cube/__pycache__/*
 Self_Solving_Rubik_Cube/main/__pycache__/*
+Self_Solving_Rubik_Cube/main/hardware/__pycache__/*
+Self_Solving_Rubik_Cube/main/algorithm/__pycache__/*
 Self_Solving_Rubik_Cube/practice/__pycache__/*
 Stepper_Motor/__pycache__/*
+Stepper_Motor/driver/__pycache__/*
 Webcam/__pycache__/*
