@@ -27,20 +27,20 @@ if __name__ == '__main__':
     # mode = 'vertex_stripe'
 
     """scrambleの生成"""
+    """完成状態からrandomに回してstateを求める場合"""
     state.Set_solved_state(mode)
     scramble_length = 20
     random_scramble = state.Create_scramble(scramble_length)
-    print("random_scramble: ", random_scramble)
 
-    # """Webcamで画像を撮影し，stateを求める"""
+    """Webcamで画像を撮影し, stateを求める場合"""
     detect_color.Take_pictures()
     # color_state = detect_color.Get_color_state()
     # random_scramble = state.color2state(color_state)
-    # print("random_scramble = ", random_scramble)
+
+    print("random_scramble: ", random_scramble)
 
     """モータ動作"""
     print('start scrambling')
-    sleep(1)
     motor = motors.Motor()
     motor.Solve(random_scramble)
 
