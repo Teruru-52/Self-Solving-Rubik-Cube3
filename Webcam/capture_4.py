@@ -1,10 +1,14 @@
 import cv2
+from usbVideoDevice import UsbVideoDevice
 
 #main
 if __name__ == '__main__':
     try:
-        for i in range(0, 7, 2):
-            capture = cv2.VideoCapture(i) # /dev/video*
+        for port in range(4):
+            usbVideoDevice = UsbVideoDevice()
+            device_id = usbVideoDevice.getId(port + 1)
+            print("video{}".format(device_id))
+            capture = cv2.VideoCapture(device_id) # /dev/video*
             capture.set(cv2.CAP_PROP_FPS, 10)
             while True:
                 if(capture.isOpened()): # Open
@@ -15,8 +19,8 @@ if __name__ == '__main__':
                     # 元Image,文字列,位置,フォント,サイズ（スケール係数）,色,太さ,ラインの種類
                     cv2.putText(image, text, (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1, 4)
                     # cv2.imshow(f'Webcam{i}', image) # 表示
-                    cv2.imwrite(f'picture/webcam_video{i}.jpg', image)
-                    capture.release ()
+                    cv2.imwrite(f'picture/webcam_test{port + 1}.jpg', image)
+                    capture.release()
                     cv2.destroyAllWindows()
                     break
     except KeyboardInterrupt:

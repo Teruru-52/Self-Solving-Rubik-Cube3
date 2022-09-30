@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
-from algorithm import knn
+from knn import K_NN
+from usbVideoDevice import UsbVideoDevice
 
 class ColorState:
     def __init__(self, cc, ec):
@@ -19,8 +20,8 @@ yellow = []
 orenge = []
 white = []
 
-def Set_train_data1(hsv, camera_no, index):
-    if cam_no == 0:
+def Set_train_data1(hsv, port, index):
+    if port == 1:
         if index in [0, 3, 9]:
             red += hsv
         elif index in [2, 5]:
@@ -34,7 +35,7 @@ def Set_train_data1(hsv, camera_no, index):
         elif index in [1, 6]:
             white += hsv
 
-    elif cam_no == 2:
+    elif port == 2:
         if index in [4, 7]:
             red += hsv
         elif index in [5]:
@@ -46,7 +47,7 @@ def Set_train_data1(hsv, camera_no, index):
         elif index in [2, 11]:
             white += hsv
 
-    elif cam_no == 4:
+    elif port == 3:
         if index in [1, 6]:
             red += hsv
         elif index in [0, 9, 10]:
@@ -60,7 +61,7 @@ def Set_train_data1(hsv, camera_no, index):
         elif index in [2, 4, 5]:
             white += hsv
 
-    elif cam_no == 6:
+    elif port == 4:
         if index in [0]:
             red += hsv
         elif index in [3, 7]:
@@ -74,8 +75,8 @@ def Set_train_data1(hsv, camera_no, index):
         elif index in [9]:
             white += hsv
 
-def Set_train_data2(hsv, camera_no, index):
-    if cam_no == 0:
+def Set_train_data2(hsv, port, index):
+    if port == 1:
         if index in [8]:
             red += hsv
         elif index in [1, 6]:
@@ -89,7 +90,7 @@ def Set_train_data2(hsv, camera_no, index):
         elif index in [3]:
             white += hsv
 
-    elif cam_no == 2:
+    elif port == 2:
         if index in [1, 7, 9]:
             red += hsv
         elif index in [4, 9]:
@@ -103,7 +104,7 @@ def Set_train_data2(hsv, camera_no, index):
         elif index in [11]:
             white += hsv
 
-    elif cam_no == 4:
+    elif port == 3:
         if index in [2, 10]:
             red += hsv
         elif index in [1, 3]:
@@ -117,7 +118,7 @@ def Set_train_data2(hsv, camera_no, index):
         elif index in [0, 4, 5, 7]:
             white += hsv
 
-    elif cam_no == 6:
+    elif port == 4:
         if index in [6, 7]:
             red += hsv
         elif index in [2, 8]:
@@ -140,8 +141,8 @@ def Print_train_data():
     print("train_white =", white)
     
 # 要求する完成状態に合わせてここを場合分けする
-def Set_color_state(color, camera_no, index):
-    if camera_no == 0:
+def Set_color_state(color, port, index):
+    if port == 0:
         if index == 0:
             color_state.cc[2][2] = color
         elif index == 1:
@@ -167,7 +168,7 @@ def Set_color_state(color, camera_no, index):
         elif index == 11:
             color_state.cc[5][0] = color
 
-    elif camera_no == 2:
+    elif port == 2:
         if index == 0:
             color_state.cc[0][2] = color
         elif index == 1:
@@ -193,7 +194,7 @@ def Set_color_state(color, camera_no, index):
         elif index == 11:
             color_state.cc[7][0] = color
 
-    elif camera_no == 4:
+    elif port == 4:
         if index == 0:
             color_state.cc[1][0] = color
         elif index == 1:
@@ -219,7 +220,7 @@ def Set_color_state(color, camera_no, index):
         elif index == 11:
             color_state.cc[5][1] = color
 
-    elif camera_no == 6:
+    elif port == 6:
         if index == 0:
             color_state.cc[3][0] = color
         elif index == 1:
@@ -245,7 +246,7 @@ def Set_color_state(color, camera_no, index):
         elif index == 11:
             color_state.cc[7][1] = color
 
-k_nn = knn.K_NN(k = 1) 
+k_nn = K_NN(k = 4) 
 train_red = [[5.64, 164.77, 155.87]]
 train_blue = [[107.05, 144.05, 220.48], [104.81, 179.99, 89.31]]
 train_green = [[55.04, 78.68, 151.31]]
@@ -262,9 +263,10 @@ label = ['R' for i in range(len(train_red))] + \
         ['W' for i in range(len(train_white))]
 
 class Camera:
-    def __init__(self, xy, cam_no):
+    def __init__(self, xy, port, device_id):
         self.xy = xy
-        self.cam_no = cam_no
+        self.port = port
+        self.device_id = device_id
 
     def Get_hsv(self, imgBox):
         # BGRからHSVに変換
@@ -289,7 +291,7 @@ class Camera:
         return color
 
     def camera2color_state(self):
-        img = cv2.imread(f'picture/webcam{self.cam_no}.jpg')
+        img = cv2.imread(f'picture/webcam{self.port}.jpg')
 
         lateral = 30        
         for i in range(12):
@@ -300,7 +302,7 @@ class Camera:
             print('')
             print('### index = ', i)
             color = self.Identificate_color(hsv)
-            Set_color_state(color, self.cam_no, i)
+            Set_color_state(color, self.port, i)
 
         # draw rectangle
         # cv2.rectangle(img, (self.xy[6][0], self.xy[6][1]), (self.xy[6][0]+lateral, self.xy[][1]+lateral), (255, 0, 0), thickness=4)
@@ -309,10 +311,10 @@ class Camera:
 
         print("cc = ", color_state.cc)
         print("ec = ", color_state.ec)
-        cv2.imwrite(f'picture/webcam{self.cam_no}.jpg', img)
+        cv2.imwrite(f'picture/webcam{self.port}.jpg', img)
 
     def camera2train_data(self, train_no):
-        img = cv2.imread(f'picture/webcam{self.cam_no}.jpg')
+        img = cv2.imread(f'picture/webcam{self.port}.jpg')
 
         lateral = 30        
         for i in range(12):
@@ -321,19 +323,19 @@ class Camera:
             # HSVの平均値を取得
             hsv = self.Get_hsv(imgBox)
             if train_no == 1:
-                Set_train_data1(hsv, self.cam_no, i)
+                Set_train_data1(hsv, self.port, i)
             elif train_no == 2:
-                Set_train_data2(hsv, self.cam_no, i)
+                Set_train_data2(hsv, self.port, i)
 
         # draw rectangle
         # cv2.rectangle(img, (self.xy[6][0], self.xy[6][1]), (self.xy[6][0]+lateral, self.xy[][1]+lateral), (255, 0, 0), thickness=4)
         for i in range(12):
             cv2.rectangle(img, (self.xy[i][0], self.xy[i][1]), (self.xy[i][0]+lateral, self.xy[i][1]+lateral), (255, 0, 0), thickness=4)
 
-        cv2.imwrite(f'picture/webcam{self.cam_no}.jpg', img)
+        cv2.imwrite(f'picture/webcam{self.port}.jpg', img)
 
     def Take_picture(self):
-        capture = cv2.VideoCapture(self.cam_no) # /dev/video*
+        capture = cv2.VideoCapture(self.device_id) # /dev/video*
         capture.set(cv2.CAP_PROP_FPS, 10)
         while True:
             if(capture.isOpened()): # Open
@@ -342,38 +344,39 @@ class Camera:
                     raise IOError
                 text = 'WIDTH={:.0f} HEIGHT={:.0f} FPS={:.0f}'.format(capture.get(cv2.CAP_PROP_FRAME_WIDTH),capture.get(cv2.CAP_PROP_FRAME_HEIGHT),capture.get(cv2.CAP_PROP_FPS))
                 cv2.putText(image, text, (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1, 4)
-                # cv2.imshow(f'Webcam{self.cam_no}', image)
-                cv2.imwrite(f'picture/webcam{self.cam_no}.jpg', image)
-                capture.release ()
+                # cv2.imshow(f'Webcam{self.port}', image)
+                cv2.imwrite(f'picture/webcam{self.port}.jpg', image)
+                capture.release()
                 cv2.destroyAllWindows()
                 break
 
-xy_camera0 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 330], [525, 450],
+xy_camera1 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 330], [525, 450],
               [360, 380], [400, 490], [690, 380], [650, 490], [710, 515]]
 
-xy_camera4 = [[260, 170], [300, 230], [220, 230], [180, 130], [140, 190], [340, 130], [380, 190],
+xy_camera3 = [[260, 170], [300, 230], [220, 230], [180, 130], [140, 190], [340, 130], [380, 190],
               [400, 110], [300, 340], [220, 340], [300, 430], [220, 430]]
 
-camera0 = Camera(xy_camera0, 0)
-camera2 = Camera(xy_camera0, 2)
-camera4 = Camera(xy_camera4, 4)
-camera6 = Camera(xy_camera4, 6)
+usbVideoDevice = UsbVideoDevice()
+camera1 = Camera(xy_camera1, 1, usbVideoDevice.getId(1))
+camera2 = Camera(xy_camera1, 2, usbVideoDevice.getId(2))
+camera3 = Camera(xy_camera3, 3, usbVideoDevice.getId(3))
+camera4 = Camera(xy_camera3, 4, usbVideoDevice.getId(4))
 
 def Take_pictures():
-    camera0.Take_picture()
+    camera1.Take_picture()
     camera2.Take_picture()
+    camera3.Take_picture()
     camera4.Take_picture()
-    camera6.Take_picture()
 
 def Get_color_state():
-    # camera0.camera2color_state()
+    # camera1.camera2color_state()
 #     camera2.camera2color_state()
+#     camera3.camera2color_state()
 #     camera4.camera2color_state()
-#     camera6.camera2color_state()
     return color_state
 
 def Set_train_data(train_no):
-    camera0.camera2train_data(train_no)
+    camera1.camera2train_data(train_no)
     camera2.camera2train_data(train_no)
+    camera3.camera2train_data(train_no)
     camera4.camera2train_data(train_no)
-    camera6.camera2train_data(train_no)
