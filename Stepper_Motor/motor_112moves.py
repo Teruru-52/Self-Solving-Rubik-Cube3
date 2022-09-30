@@ -5,10 +5,10 @@ from time import sleep
 if __name__ == '__main__':
     motor = motors.Motor()
 
-    scramble = "B' R B U'"
+    scramble = "R U R' D'"
 
     try:
-        for _ in range(6):
+        for _ in range(28):
             motor.Solve(scramble)
 
     except KeyboardInterrupt  :         #Ctl+Cが押されたらループを終了
