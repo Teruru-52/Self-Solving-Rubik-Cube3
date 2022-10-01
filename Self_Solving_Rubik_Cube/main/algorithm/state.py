@@ -24,7 +24,7 @@ class State:
         new_eo = [(self.eo[p] + move.eo[i]) % 2 for i, p in enumerate(move.ep)]
         return State(new_cp, new_co, new_ep, new_eo)
 
-# 完成状態を表すインスタンス
+# 6面同色状態を表すインスタンス
 initial_state = State(
     [0, 1, 2, 3, 4, 5, 6, 7],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -32,76 +32,85 @@ initial_state = State(
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 )
 
-# 完成状態の変更 (random_scrambleにのみ適用)
-# 各modeを完成状態としたときの6面同色状態を記述
-def Set_initial_state(mode):
-    print("mode: ", mode)
-    if mode == 'checker':
-        initial_state.ep = [2, 3, 0, 1, 10, 11, 8, 9, 6, 7, 4, 5]
-    elif mode == 'checker2':
-        initial_state.cp = [7, 6, 5, 4, 3, 2, 1, 0]
-    elif mode == 'heso':
-        initial_state.cp = [7, 3, 2, 6, 4, 0, 1, 5]
-        initial_state.co = [1, 2, 1, 2, 2, 1, 2, 1]
-        initial_state.ep = [11, 7, 5, 9, 3, 6, 2, 10, 0, 4, 1, 8]
-        initial_state.eo = [1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1]
-    elif mode == 'H':
-        initial_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
-    elif mode == 'T':
-        initial_state.cp = [7, 3, 2, 6, 4, 0, 1, 5]
-        initial_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
-    elif mode == 'cubeincube':
-        initial_state.cp = [5, 1, 0, 4, 6, 2, 3, 7]
-        initial_state.co = [1, 0, 1, 2, 2, 1, 2, 0]
-        initial_state.ep = [9, 1, 7, 3, 4, 5, 0, 8, 2, 6, 10, 11]
-        initial_state.eo = [1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0]
-    elif mode == 'mini_cubeincube':
-        initial_state.co = [0, 2, 0, 0, 0, 0, 0, 1]
-    elif mode == 'vortex': 
-        initial_state.cp = [5, 1, 0, 4, 6, 2, 3, 7]
-        initial_state.co = [1, 0, 1, 2, 2, 1, 2, 0]
-        initial_state.ep = [9, 4, 7, 10, 5, 1, 0, 8, 2, 6, 10, 11]
-        initial_state.eo = [1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0]
-    elif mode == 'vertical_stripe':
-        initial_state.cp = [1, 0, 3, 2, 5, 4, 7, 6]
-        initial_state.ep = [1, 0, 3, 2, 4, 5, 6, 7, 8, 9, 10, 11]
-        initial_state.eo = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+normal_color_state = detect_color.ColorState(
+    [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']],
+    [['B','O'], ['B','R'], ['G','R'], ['G','O'], ['W','B'], ['W','R'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['Y','G'], ['Y','O']]
+)
+checker_color_state = detect_color.ColorState(
+    normal_color_state.cc,
+    [['G','R'], ['G','O'], ['B','O'], ['B','R'], ['Y','G'], ['Y','O'], ['Y','B'], ['Y','R'], ['W','G'], ['W','O'], ['W','B'], ['W','R']]
+)
+checker2_color_state = detect_color.ColorState(
+    [['Y','O','G'], ['Y','G','R'], ['Y','R','B'], ['Y','B','O'], ['W','G','O'], ['W','R','G'], ['W','B','R'], ['W','O','B']],
+    normal_color_state.ec
+)
+heso_color_state = detect_color.ColorState(
+    [['R','B','Y'], ['R','Y','G'], ['R','G','W'], ['R','W','B'], ['O','Y','B'], ['O','G','Y'], ['O','W','G'], ['O','B','W']],
+    [['Y','B'], ['Y','G'], ['W','G'], ['W','B'], ['R','Y'], ['R','G'], ['R','W'], ['R','B'], ['O','Y'], ['O','G'], ['O','W'], ['O','B']]
+)
+H_color_state = detect_color.ColorState(
+    [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']],
+    [['B','R'], ['B','O'], ['G','O'], ['G','R'], ['W','G'], ['Y','R'], ['W','B'], ['Y','O'], ['Y','G'], ['W','R'], ['Y','B'], ['W','O']]
+)
+T_color_state = detect_color.ColorState(
+    [['Y','R','B'], ['Y','G','R'], ['W','R','G'], ['W','B','R'], ['Y','B','O'], ['Y','O','G'], ['W','G','O'], ['W','O','B']],
+    [['B','R'], ['B','O'], ['G','O'], ['G','R'], ['W','G'], ['Y','R'], ['W','B'], ['Y','O'], ['Y','G'], ['W','R'], ['Y','B'], ['W','O']]
+)
+cubeincube_color_state = detect_color.ColorState(
+    [['R','G','W'], ['W','B','R'], ['R','B','Y'], ['R','Y','G'], ['O','W','G'], ['O','B','W'], ['O','Y','B'], ['Y','O','G']],
+    [['W','G'], ['B','R'], ['Y','B'], ['G','O'], ['W','B'], ['W','R'], ['R','Y'], ['R','G'], ['O','W'], ['O','B'], ['Y','G'], ['Y','O']]
+)
+mini_cubeincube_color_state = detect_color.ColorState(
+    [['W','O','B'], ['R','W','B'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['O','G','Y']],
+    normal_color_state.ec
+)
+vortex_color_state = detect_color.ColorState(
+    [['R','G','W'], ['W','B','R'], ['R','B','Y'], ['R','Y','G'], ['O','W','G'], ['O','B','W'], ['O','Y','B'], ['Y','O','G']],
+    [['W','G'], ['W','R'], ['Y','B'], ['Y','O'], ['R','B'], ['W','B'], ['R','Y'], ['R','G'], ['O','W'], ['O','B'], ['O','G'], ['Y','O']]
+)
+vertical_stripe_color_state = detect_color.ColorState(
+    [['W','B','R'], ['W','O','B'], ['W','G','O'], ['W','R','G'], ['Y','R','B'], ['Y','B','O'], ['Y','O','G'], ['Y','G','R']],
+    [['R','B'], ['O','B'], ['O','G'], ['R','G'], ['W','B'], ['W','R'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['Y','G'], ['Y','O']]
+)
+solved_color_state = normal_color_state
 
-# 6面同色状態完成状態としたときの各modeを記述
-def Reset_normal_state(mode):
-    print("mode: ", mode)
-    if mode == 'checker':
-        initial_state.ep = [2, 3, 0, 1, 10, 11, 8, 9, 6, 7, 4, 5]
+def Set_state(mode): 
+    if mode == 'normal':
+        color_state = normal_color_state
+    elif mode == 'checker':
+        color_state = checker_color_state
     elif mode == 'checker2':
-        initial_state.cp = [7, 6, 5, 4, 3, 2, 1, 0]
+        color_state = checker2_color_state
     elif mode == 'heso':
-        initial_state.cp = [5, 6, 2, 1, 4, 7, 3, 0]
-        initial_state.co = [2, 1, 2, 1, 1, 2, 1, 2]
-        initial_state.ep = [8, 10, 6, 4, 9, 2, 5, 1, 11, 3, 7, 0]
-        initial_state.eo = [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1]
+        color_state = heso_color_state
     elif mode == 'H':
-        initial_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
+        color_state = H_color_state
     elif mode == 'T':
-        initial_state.cp = [5, 6, 2, 1, 4, 7, 3, 0]
-        initial_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
+        color_state = T_color_state
     elif mode == 'cubeincube':
-        initial_state.cp = [2, 1, 5, 6, 3, 0, 4, 7]
-        initial_state.co = [2, 0, 2, 1, 1, 2, 1, 0]
-        initial_state.ep = [6, 1, 8, 3, 4, 5, 9, 2, 7, 0, 10, 11]
-        initial_state.eo = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0]
+        color_state = cubeincube_color_state
     elif mode == 'mini_cubeincube':
-        initial_state.co = [0, 1, 0, 0, 0, 0, 0, 2]
+        color_state = mini_cubeincube_color_state
     elif mode == 'vortex': 
-        initial_state.cp = [2, 1, 5, 6, 3, 0, 4, 7]
-        initial_state.co = [2, 0, 2, 1, 1, 2, 1, 0]
-        initial_state.ep = [6, 5, 8, 11, 1, 4, 9, 2, 7, 0, 3, 11]
-        initial_state.eo = [0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0]
+        color_state = vortex_color_state
     elif mode == 'vertical_stripe':
-        initial_state.cp = [1, 0, 3, 2, 5, 4, 7, 6]
-        initial_state.ep = [1, 0, 3, 2, 4, 5, 6, 7, 8, 9, 10, 11]
-        initial_state.eo = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+        color_state = vertical_stripe_color_state
+    return color_state
+
+# 次の状態を完成状態としたときの各modeの状態を求める
+def Set_next_state(cur_mode, next_mode):
+    print("mode: ", next_mode)
+    current_color_state = Set_state(cur_mode)
+    next_color_state = Set_state(next_mode)
+    initial_state = color2state(current_color_state, next_color_state)
     return initial_state
 
+# 画像からの色状態と各modeの色状態から，各modeの状態を求める
+def Set_solved_state(mode, current_color_state):
+    print("mode: ", mode)
+    solved_color_state = Set_state(mode)
+    initial_state = color2state(current_color_state, solved_color_state)
+    return initial_state
 
 # 18種類の1手操作を全部定義する
 moves = {
@@ -188,37 +197,26 @@ def Create_scramble(scramble_length):
                 flag = False
     return random_scramble.strip()
 
-def color2state(color_state):
-    initial_state = State(
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    )
-
-    solved_cc = [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']]
-    solved_ec = [['B','O'], ['B','R'], ['G','R'], ['G','O'], ['W','B'], ['W','R'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['Y','G'], ['Y','O']]
-    solved_color_state = ColorState(solved_cc, solved_ec)
-
+def color2state(current_color_state, solved_color_state):
     for i in range(8):
         for j in range(8):
-            if set(color_state.cc[i]) == set(solved_color_state.cc[j]):
+            if set(current_color_state.cc[i]) == set(solved_color_state.cc[j]):
                 initial_state.cp[i] = j
-                if color_state.cc[i] == solved_color_state.cc[j]:
+                if current_color_state.cc[i] == solved_color_state.cc[j]:
                     initial_state.co[i] = 0
                 else:
-                    tmp = color_state.cc[i].pop(0)
-                    color_state.cc[i].append(tmp)
-                    if color_state.cc[i] == solved_color_state.cc[j]:
+                    tmp = current_color_state.cc[i].pop(0)
+                    current_color_state.cc[i].append(tmp)
+                    if current_color_state.cc[i] == solved_color_state.cc[j]:
                         initial_state.co[i] = 1
                     else:
                         initial_state.co[i] = 2
                 continue
     for i in range(12):
         for j in range(12):
-            if set(color_state.ec[i]) == set(solved_color_state.ec[j]):
+            if set(current_color_state.ec[i]) == set(solved_color_state.ec[j]):
                 initial_state.ep[i] = j
-                if color_state.ec[i] == solved_color_state.ec[j]:
+                if current_color_state.ec[i] == solved_color_state.ec[j]:
                     initial_state.eo[i] = 0
                 else:
                     initial_state.eo[i] = 1

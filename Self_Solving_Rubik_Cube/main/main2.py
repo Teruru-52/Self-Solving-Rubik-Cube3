@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     """scrambled_stateの生成"""
     """1. 完成状態からrandomに回してstateを求める場合"""
-    # state.Set_initial_state(mode)
+    # state.Set_next_state('normal', mode)
     # scramble_length = 20
     # random_scramble = state.Create_scramble(scramble_length)
     # print("random_scramble: ", random_scramble)
@@ -41,12 +41,12 @@ if __name__ == '__main__':
     # scrambled_state = state.scamble2state(random_scramble)
 
     """模様の状態から6面同色状態に戻す"""
-    scrambled_state = state.Reset_normal_state(mode)
+    scrambled_state = state.Set_next_state(mode, 'normal')
 
     """2. Webcamで画像を撮影し, stateを求める場合"""
     # detect_color.Take_pictures()
     # color_state = detect_color.Get_color_state()
-    # scrambled_state = state.color2state(color_state)
+    # scrambled_state = state.Set_solved_state(mode, color_state)
     # print("scrambled_state: ", scrambled_state)
 
     # """Phase1探索プログラムの動作確認"""
