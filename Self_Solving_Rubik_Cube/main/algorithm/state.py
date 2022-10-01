@@ -25,7 +25,7 @@ class State:
         return State(new_cp, new_co, new_ep, new_eo)
 
 # 完成状態を表すインスタンス
-solved_state = State(
+initial_state = State(
     [0, 1, 2, 3, 4, 5, 6, 7],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
@@ -33,38 +33,74 @@ solved_state = State(
 )
 
 # 完成状態の変更 (random_scrambleにのみ適用)
-def Set_solved_state(mode):
+# 各modeを完成状態としたときの6面同色状態を記述
+def Set_initial_state(mode):
     print("mode: ", mode)
     if mode == 'checker':
-        solved_state.ep = [2, 3, 0, 1, 10, 11, 8, 9, 6, 7, 4, 5]
+        initial_state.ep = [2, 3, 0, 1, 10, 11, 8, 9, 6, 7, 4, 5]
     elif mode == 'checker2':
-        solved_state.cp = [7, 6, 5, 4, 3, 2, 1, 0]
+        initial_state.cp = [7, 6, 5, 4, 3, 2, 1, 0]
     elif mode == 'heso':
-        solved_state.cp = [5, 6, 2, 1, 4, 7, 3, 0]
-        solved_state.co = [2, 1, 2, 1, 1, 2, 1, 2]
-        solved_state.ep = [8, 10, 6, 4, 9, 2, 5, 1, 11, 3, 7, 0]
-        solved_state.eo = [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1]
+        initial_state.cp = [7, 3, 2, 6, 4, 0, 1, 5]
+        initial_state.co = [1, 2, 1, 2, 2, 1, 2, 1]
+        initial_state.ep = [11, 7, 5, 9, 3, 6, 2, 10, 0, 4, 1, 8]
+        initial_state.eo = [1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1]
     elif mode == 'H':
-        solved_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
+        initial_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
     elif mode == 'T':
-        solved_state.cp = [5, 6, 2, 1, 4, 7, 3, 0]
-        solved_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
+        initial_state.cp = [7, 3, 2, 6, 4, 0, 1, 5]
+        initial_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
     elif mode == 'cubeincube':
-        solved_state.cp = [2, 1, 5, 6, 3, 0, 4, 7]
-        solved_state.co = [2, 0, 2, 1, 1, 2, 1, 0]
-        solved_state.ep = [6, 1, 8, 3, 4, 5, 9, 2, 7, 0, 10, 11]
-        solved_state.eo = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0]
+        initial_state.cp = [5, 1, 0, 4, 6, 2, 3, 7]
+        initial_state.co = [1, 0, 1, 2, 2, 1, 2, 0]
+        initial_state.ep = [9, 1, 7, 3, 4, 5, 0, 8, 2, 6, 10, 11]
+        initial_state.eo = [1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0]
     elif mode == 'mini_cubeincube':
-        solved_state.co = [0, 1, 0, 0, 0, 0, 0, 2]
+        initial_state.co = [0, 2, 0, 0, 0, 0, 0, 1]
     elif mode == 'vortex': 
-        solved_state.cp = [2, 1, 5, 6, 3, 0, 4, 7]
-        solved_state.co = [2, 0, 2, 1, 1, 2, 1, 0]
-        solved_state.ep = [6, 5, 8, 11, 1, 4, 9, 2, 7, 0, 3, 11]
-        solved_state.eo = [0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0]
+        initial_state.cp = [5, 1, 0, 4, 6, 2, 3, 7]
+        initial_state.co = [1, 0, 1, 2, 2, 1, 2, 0]
+        initial_state.ep = [9, 4, 7, 10, 5, 1, 0, 8, 2, 6, 10, 11]
+        initial_state.eo = [1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0]
     elif mode == 'vertical_stripe':
-        solved_state.cp = [1, 0, 3, 2, 5, 4, 7, 6]
-        solved_state.ep = [1, 0, 3, 2, 4, 5, 6, 7, 8, 9, 10, 11]
-        solved_state.eo = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+        initial_state.cp = [1, 0, 3, 2, 5, 4, 7, 6]
+        initial_state.ep = [1, 0, 3, 2, 4, 5, 6, 7, 8, 9, 10, 11]
+        initial_state.eo = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+
+# 6面同色状態完成状態としたときの各modeを記述
+def Reset_normal_state(mode):
+    print("mode: ", mode)
+    if mode == 'checker':
+        initial_state.ep = [2, 3, 0, 1, 10, 11, 8, 9, 6, 7, 4, 5]
+    elif mode == 'checker2':
+        initial_state.cp = [7, 6, 5, 4, 3, 2, 1, 0]
+    elif mode == 'heso':
+        initial_state.cp = [5, 6, 2, 1, 4, 7, 3, 0]
+        initial_state.co = [2, 1, 2, 1, 1, 2, 1, 2]
+        initial_state.ep = [8, 10, 6, 4, 9, 2, 5, 1, 11, 3, 7, 0]
+        initial_state.eo = [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1]
+    elif mode == 'H':
+        initial_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
+    elif mode == 'T':
+        initial_state.cp = [5, 6, 2, 1, 4, 7, 3, 0]
+        initial_state.ep = [1, 0, 3, 2, 6, 9, 4, 11, 10, 5, 8, 7]
+    elif mode == 'cubeincube':
+        initial_state.cp = [2, 1, 5, 6, 3, 0, 4, 7]
+        initial_state.co = [2, 0, 2, 1, 1, 2, 1, 0]
+        initial_state.ep = [6, 1, 8, 3, 4, 5, 9, 2, 7, 0, 10, 11]
+        initial_state.eo = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0]
+    elif mode == 'mini_cubeincube':
+        initial_state.co = [0, 1, 0, 0, 0, 0, 0, 2]
+    elif mode == 'vortex': 
+        initial_state.cp = [2, 1, 5, 6, 3, 0, 4, 7]
+        initial_state.co = [2, 0, 2, 1, 1, 2, 1, 0]
+        initial_state.ep = [6, 5, 8, 11, 1, 4, 9, 2, 7, 0, 3, 11]
+        initial_state.eo = [0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0]
+    elif mode == 'vertical_stripe':
+        initial_state.cp = [1, 0, 3, 2, 5, 4, 7, 6]
+        initial_state.ep = [1, 0, 3, 2, 4, 5, 6, 7, 8, 9, 10, 11]
+        initial_state.eo = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+    return initial_state
 
 
 # 18種類の1手操作を全部定義する
@@ -106,7 +142,7 @@ def scamble2state(scramble):
     """
     スクランブル文字列適用したstateを返す
     """
-    scrambled_state = solved_state
+    scrambled_state = initial_state
     for move_name in scramble.split(" "):
         move_state = moves[move_name]
         scrambled_state = scrambled_state.apply_move(move_state)

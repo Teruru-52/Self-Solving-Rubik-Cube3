@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
-from knn import K_NN
-from usbVideoDevice import UsbVideoDevice
+from algorithm import knn
+from algorithm import usbVideoDevice
 
 class ColorState:
     def __init__(self, cc, ec):
@@ -140,7 +140,6 @@ def Print_train_data():
     print("train_orenge =", orenge)
     print("train_white =", white)
     
-# 要求する完成状態に合わせてここを場合分けする
 def Set_color_state(color, port, index):
     if port == 0:
         if index == 0:
@@ -246,7 +245,7 @@ def Set_color_state(color, port, index):
         elif index == 11:
             color_state.cc[7][1] = color
 
-k_nn = K_NN(k = 4) 
+k_nn = knn.K_NN(k = 1)
 train_red = [[5.64, 164.77, 155.87]]
 train_blue = [[107.05, 144.05, 220.48], [104.81, 179.99, 89.31]]
 train_green = [[55.04, 78.68, 151.31]]
@@ -356,11 +355,11 @@ xy_camera1 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 33
 xy_camera3 = [[260, 170], [300, 230], [220, 230], [180, 130], [140, 190], [340, 130], [380, 190],
               [400, 110], [300, 340], [220, 340], [300, 430], [220, 430]]
 
-usbVideoDevice = UsbVideoDevice()
-camera1 = Camera(xy_camera1, 1, usbVideoDevice.getId(1))
-camera2 = Camera(xy_camera1, 2, usbVideoDevice.getId(2))
-camera3 = Camera(xy_camera3, 3, usbVideoDevice.getId(3))
-camera4 = Camera(xy_camera3, 4, usbVideoDevice.getId(4))
+usb_device = usbVideoDevice.UsbVideoDevice()
+camera1 = Camera(xy_camera1, 1, usb_device.getId(1))
+camera2 = Camera(xy_camera1, 2, usb_device.getId(2))
+camera3 = Camera(xy_camera3, 3, usb_device.getId(3))
+camera4 = Camera(xy_camera3, 4, usb_device.getId(4))
 
 def Take_pictures():
     camera1.Take_picture()

@@ -77,10 +77,11 @@ def scamble2state(scramble):
         scrambled_state = scrambled_state.apply_move(move_state)
     return scrambled_state
 
-# 完成状態における色情報
+# 6面同色状態における色情報
 solved_cc = [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']]
 solved_ec = [['B','O'], ['B','R'], ['G','R'], ['G','O'], ['W','B'], ['W','R'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['Y','G'], ['Y','O']]
 
+# 6面同色状態から見た各模様の状態
 def color2state(state, cc, ec):
     for i in range(8):
         for j in range(8):
@@ -101,6 +102,38 @@ def color2state(state, cc, ec):
             if set(ec[i]) == set(solved_ec[j]):
                 state.ep[i] = j
                 if ec[i] == solved_ec[j]:
+                    state.eo[i] = 0
+                else:
+                    state.eo[i] = 1
+                continue
+
+    print("\n")
+    print("cp =", state.cp)
+    print("co =", state.co)
+    print("ep =", state.ep)
+    print("eo =", state.eo)
+
+# 各模様の状態から見た6面同色状態
+def color2state2(state, cc, ec):
+    for i in range(8):
+        for j in range(8):
+            if set(solved_cc[i]) == set(cc[j]):
+                state.cp[i] = j
+                if solved_cc[i] == cc[j]:
+                    state.co[i] = 0
+                else:
+                    tmp = solved_cc[i].pop(0)
+                    solved_cc[i].append(tmp)
+                    if solved_cc[i] == cc[j]:
+                        state.co[i] = 1
+                    else:
+                        state.co[i] = 2
+                continue
+    for i in range(12):
+        for j in range(12):
+            if set(solved_ec[i]) == set(ec[j]):
+                state.ep[i] = j
+                if solved_ec[i] == ec[j]:
                     state.eo[i] = 0
                 else:
                     state.eo[i] = 1
@@ -134,7 +167,8 @@ def checker2state():
     checker_cc = solved_cc
     checker_ec = [['G','R'], ['G','O'], ['B','O'], ['B','R'], ['Y','G'], ['Y','O'], ['Y','B'], ['Y','R'], ['W','G'], ['W','O'], ['W','B'], ['W','R']]
 
-    color2state(state, checker_cc, checker_ec)
+    # color2state(state, checker_cc, checker_ec)
+    color2state2(state, checker_cc, checker_ec)
 
 def checker2state2():
     # 適当なインスタンスを代入しておく
@@ -144,7 +178,8 @@ def checker2state2():
     checker2_cc = [['Y','O','G'], ['Y','G','R'], ['Y','R','B'], ['Y','B','O'], ['W','G','O'], ['W','R','G'], ['W','B','R'], ['W','O','B']]
     checker2_ec = solved_ec
 
-    color2state(state, checker2_cc, checker2_ec)
+    # color2state(state, checker2_cc, checker2_ec)
+    color2state2(state, checker2_cc, checker2_ec)
 
 def heso2state():
     # 適当なインスタンスを代入しておく
@@ -154,7 +189,8 @@ def heso2state():
     heso_cc = [['R','B','Y'], ['R','Y','G'], ['R','G','W'], ['R','W','B'], ['O','Y','B'], ['O','G','Y'], ['O','W','G'], ['O','B','W']]
     heso_ec = [['Y','B'], ['Y','G'], ['W','G'], ['W','B'], ['R','Y'], ['R','G'], ['R','W'], ['R','B'], ['O','Y'], ['O','G'], ['O','W'], ['O','B']]
 
-    color2state(state, heso_cc, heso_ec)
+    # color2state(state, heso_cc, heso_ec)
+    color2state2(state, heso_cc, heso_ec)
 
 def H2state():
     # 適当なインスタンスを代入しておく
@@ -164,7 +200,8 @@ def H2state():
     H_cc = [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']]
     H_ec = [['B','R'], ['B','O'], ['G','O'], ['G','R'], ['W','G'], ['Y','R'], ['W','B'], ['Y','O'], ['Y','G'], ['W','R'], ['Y','B'], ['W','O']]
 
-    color2state(state, H_cc, H_ec)
+    # color2state(state, H_cc, H_ec)
+    color2state2(state, H_cc, H_ec)
 
 def T2state():
     # 適当なインスタンスを代入しておく
@@ -174,7 +211,8 @@ def T2state():
     T_cc = [['Y','R','B'], ['Y','G','R'], ['W','R','G'], ['W','B','R'], ['Y','B','O'], ['Y','O','G'], ['W','G','O'], ['W','O','B']]
     T_ec = [['B','R'], ['B','O'], ['G','O'], ['G','R'], ['W','G'], ['Y','R'], ['W','B'], ['Y','O'], ['Y','G'], ['W','R'], ['Y','B'], ['W','O']]
 
-    color2state(state, T_cc, T_ec)
+    # color2state(state, T_cc, T_ec)
+    color2state2(state, T_cc, T_ec)
 
 def cubeincube2state():
     # 適当なインスタンスを代入しておく
@@ -184,7 +222,8 @@ def cubeincube2state():
     cubeincube_cc = [['R','G','W'], ['W','B','R'], ['R','B','Y'], ['R','Y','G'], ['O','W','G'], ['O','B','W'], ['O','Y','B'], ['Y','O','G']]
     cubeincube_ec = [['W','G'], ['B','R'], ['Y','B'], ['G','O'], ['W','B'], ['W','R'], ['R','Y'], ['R','G'], ['O','W'], ['O','B'], ['Y','G'], ['Y','O']]
 
-    color2state(state, cubeincube_cc, cubeincube_ec)
+    # color2state(state, cubeincube_cc, cubeincube_ec)
+    color2state2(state, cubeincube_cc, cubeincube_ec)
 
 def mini_cubeincube2state():
     # 適当なインスタンスを代入しておく
@@ -194,7 +233,8 @@ def mini_cubeincube2state():
     mini_cubeincube_cc = [['W','O','B'], ['R','W','B'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['O','G','Y']]
     mini_cubeincube_ec = solved_ec
 
-    color2state(state, mini_cubeincube_cc, mini_cubeincube_ec)
+    # color2state(state, mini_cubeincube_cc, mini_cubeincube_ec)
+    color2state2(state, mini_cubeincube_cc, mini_cubeincube_ec)
 
 def vortex2state():
     # 適当なインスタンスを代入しておく
@@ -204,7 +244,8 @@ def vortex2state():
     vortex_cc = [['R','G','W'], ['W','B','R'], ['R','B','Y'], ['R','Y','G'], ['O','W','G'], ['O','B','W'], ['O','Y','B'], ['Y','O','G']]
     vortex_ec = [['W','G'], ['W','R'], ['Y','B'], ['Y','O'], ['R','B'], ['W','B'], ['R','Y'], ['R','G'], ['O','W'], ['O','B'], ['O','G'], ['Y','O']]
 
-    color2state(state, vortex_cc, vortex_ec)
+    # color2state(state, vortex_cc, vortex_ec)
+    color2state2(state, vortex_cc, vortex_ec)
 
 def vertical_stripe2state():
     # 適当なインスタンスを代入しておく
@@ -214,7 +255,8 @@ def vertical_stripe2state():
     vertical_stripe_cc = [['W','B','R'], ['W','O','B'], ['W','G','O'], ['W','R','G'], ['Y','R','B'], ['Y','B','O'], ['Y','O','G'], ['Y','G','R']]
     vertical_stripe_ec = [['R','B'], ['O','B'], ['O','G'], ['R','G'], ['W','B'], ['W','R'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['Y','G'], ['Y','O']]
 
-    color2state(state, vertical_stripe_cc, vertical_stripe_ec)
+    # color2state(state, vertical_stripe_cc, vertical_stripe_ec)
+    color2state2(state, vertical_stripe_cc, vertical_stripe_ec)
 
 """main関数"""
 if __name__ == '__main__':
