@@ -195,9 +195,9 @@ class Camera:
             Set_color_state(color, self.port, i)
 
         # draw rectangle
-        cv2.rectangle(img, (self.xy[8][0], self.xy[8][1]), (self.xy[8][0]+lateral, self.xy[8][1]+lateral), (255, 0, 0), thickness=4)
-        # for i in range(len(self.xy)):
-        #     cv2.rectangle(img, (self.xy[i][0], self.xy[i][1]), (self.xy[i][0]+lateral, self.xy[i][1]+lateral), (255, 0, 0), thickness=4)
+        # cv2.rectangle(img, (self.xy[8][0], self.xy[8][1]), (self.xy[8][0]+lateral, self.xy[8][1]+lateral), (255, 0, 0), thickness=4)
+        for i in range(len(self.xy)):
+            cv2.rectangle(img, (self.xy[i][0], self.xy[i][1]), (self.xy[i][0]+lateral, self.xy[i][1]+lateral), (255, 0, 0), thickness=4)
 
         print("cc = ", color_state.cc)
         print("ccc = ", correct_state.cc)
@@ -208,11 +208,12 @@ class Camera:
 def Get_color_state():
     return color_state
 
-xy_camera1 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 330], [525, 450],
-              [360, 380], [400, 490], [690, 380], [650, 490], [710, 515]]
+xy_camera1 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 330]]
 
-xy_camera3 = [[260, 170], [300, 230], [220, 230], [180, 130], [140, 190], [340, 130], [380, 190],
-              [400, 110], [300, 340], [220, 340], [300, 430], [220, 430]]
+# xy_camera1 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 330]]
+
+# xy_camera3 = [[260, 170], [300, 230], [220, 230], [180, 130], [140, 190], [340, 130], [380, 190],
+#               [400, 110], [300, 340], [220, 340], [300, 430], [220, 430]]
 
 #main
 if __name__ == '__main__':
