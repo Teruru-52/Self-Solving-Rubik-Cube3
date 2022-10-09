@@ -20,230 +20,147 @@ yellow = []
 orenge = []
 white = []
 
-def Set_train_data1(hsv, port, index):
-    if port == 1:
-        if index in [0, 3, 9]:
-            red += hsv
-        elif index in [2, 5]:
-            blue += hsv
-        elif index in [7, 10]:
-            green += hsv
-        elif index in [8]:
-            yellow += hsv
-        elif index in [4, 11]:
-            orenge += hsv
-        elif index in [1, 6]:
-            white += hsv
+def Set_train_data(hsv, port, train_no, index):
+    global red
+    global blue
+    global green
+    global yellow
+    global orenge
+    global white
 
-    elif port == 2:
-        if index in [4, 7]:
-            red += hsv
-        elif index in [5]:
-            blue += hsv
-        elif index in [1, 6, 8, 9]:
-            yellow += hsv
-        elif index in [0, 3, 10]:
-            orenge += hsv
-        elif index in [2, 11]:
-            white += hsv
+    if train_no == 1:
+        if port == 1:
+            if index in [0, 1, 2]:
+                green += [hsv]
+            elif index in [3, 4, 5]:
+                red += [hsv]
 
-    elif port == 3:
-        if index in [1, 6]:
-            red += hsv
-        elif index in [0, 9, 10]:
-            blue += hsv
-        elif index in [3, 7]:
-            green += hsv
-        elif index in [11]:
-            yellow += hsv
-        elif index in [8]:
-            orenge += hsv
-        elif index in [2, 4, 5]:
-            white += hsv
+        elif port == 2:
+            if index in [0, 1, 2]:
+                blue += [hsv]
+            elif index in [3, 4, 5]:
+                orenge += [hsv]
 
-    elif port == 4:
-        if index in [0]:
-            red += hsv
-        elif index in [3, 7]:
-            blue += hsv
-        elif index in [2, 6, 7, 11]:
-            green += hsv
-        elif index in [1, 4]:
-            yellow += hsv
-        elif index in [5, 10]:
-            orenge += hsv
-        elif index in [9]:
-            white += hsv
-
-def Set_train_data2(hsv, port, index):
-    if port == 1:
-        if index in [8]:
-            red += hsv
-        elif index in [1, 6]:
-            blue += hsv
-        elif index in [2, 9]:
-            green += hsv
-        elif index in [0, 5, 7, 11]:
-            yellow += hsv
-        elif index in [4, 10]:
-            orenge += hsv
-        elif index in [3]:
-            white += hsv
-
-    elif port == 2:
-        if index in [1, 7, 9]:
-            red += hsv
-        elif index in [4, 9]:
-            blue += hsv
-        elif index in [0, 4, 10]:
-            green += hsv
-        elif index in [2, 5]:
-            yellow += hsv
-        elif index in [7]:
-            orenge += hsv
-        elif index in [11]:
-            white += hsv
-
-    elif port == 3:
-        if index in [2, 10]:
-            red += hsv
-        elif index in [1, 3]:
-            blue += hsv
-        elif index in [9, 11]:
-            green += hsv
-        elif index in [8]:
-            yellow += hsv
-        elif index in [6]:
-            orenge += hsv
-        elif index in [0, 4, 5, 7]:
-            white += hsv
-
-    elif port == 4:
-        if index in [6, 7]:
-            red += hsv
-        elif index in [2, 8]:
-            blue += hsv
-        elif index in [11]:
-            green += hsv
-        elif index in [3]:
-            yellow += hsv
-        elif index in [1, 4, 9, 10]:
-            orenge += hsv
-        elif index in [0, 5]:
-            white += hsv
-
-def Print_train_data():
-    print("train_red =", red)
-    print("train_blue =", blue)
-    print("train_green =", green)
-    print("train_yellow =", yellow)
-    print("train_orenge =", orenge)
-    print("train_white =", white)
+    elif train_no == 2:
+        if port == 1:
+            if index in [0, 1, 2]:
+                yellow += [hsv]
+        elif port == 3:
+            if index in [3, 4, 5]:
+                white += [hsv]
     
-def Set_color_state(color, port, index):
-    if port == 0:
-        if index == 0:
-            color_state.cc[2][2] = color
-        elif index == 1:
-            color_state.cc[2][1] = color
-        elif index == 2:
-            color_state.ec[2][0] = color
-        elif index == 3:
-            color_state.ec[2][1] = color
-        elif index == 4:
-            color_state.cc[6][1] = color
-        elif index == 5:
-            color_state.cc[6][2] = color
-        elif index == 6:
-            color_state.cc[6][0] = color
-        elif index == 7:
-            color_state.ec[10][1] = color
-        elif index == 8:
-            color_state.ec[10][0] = color
-        elif index == 9:
-            color_state.ec[9][1] = color
-        elif index == 10:
-            color_state.ec[9][0] = color
-        elif index == 11:
-            color_state.cc[5][0] = color
-
-    elif port == 2:
-        if index == 0:
-            color_state.cc[0][2] = color
-        elif index == 1:
-            color_state.cc[0][1] = color
-        elif index == 2:
-            color_state.ec[0][0] = color
-        elif index == 3:
-            color_state.ec[0][1] = color
-        elif index == 4:
-            color_state.cc[4][1] = color
-        elif index == 5:
-            color_state.cc[4][2] = color
-        elif index == 6:
-            color_state.cc[4][0] = color
-        elif index == 7:
-            color_state.ec[8][1] = color
-        elif index == 8:
-            color_state.ec[8][0] = color
-        elif index == 9:
-            color_state.ec[11][1] = color
-        elif index == 10:
-            color_state.ec[11][0] = color
-        elif index == 11:
-            color_state.cc[7][0] = color
-
-    elif port == 4:
-        if index == 0:
-            color_state.cc[1][0] = color
-        elif index == 1:
-            color_state.cc[1][1] = color
-        elif index == 2:
-            color_state.cc[1][2] = color
-        elif index == 3:
-            color_state.ec[5][0] = color
-        elif index == 4:
-            color_state.ec[5][1] = color
-        elif index == 5:
-            color_state.ec[4][0] = color
-        elif index == 6:
-            color_state.ec[4][1] = color
-        elif index == 7:
-            color_state.cc[0][0] = color
-        elif index == 8:
-            color_state.ec[1][0] = color
-        elif index == 9:
-            color_state.ec[1][1] = color
-        elif index == 10:
-            color_state.cc[5][2] = color
-        elif index == 11:
-            color_state.cc[5][1] = color
-
-    elif port == 6:
-        if index == 0:
-            color_state.cc[3][0] = color
-        elif index == 1:
-            color_state.cc[3][1] = color
-        elif index == 2:
-            color_state.cc[3][2] = color
-        elif index == 3:
-            color_state.ec[7][0] = color
-        elif index == 4:
-            color_state.ec[7][1] = color
-        elif index == 5:
-            color_state.ec[6][0] = color
-        elif index == 6:
-            color_state.ec[6][1] = color
-        elif index == 7:
-            color_state.cc[0][0] = color
-        elif index == 8:
-            color_state.ec[3][0] = color
-        elif index == 9:
-            color_state.ec[3][1] = color
-        elif index == 10:
-            color_state.cc[7][2] = color
-        elif index == 11:
-            color_state.cc[7][1] = color
+def Set_color_state(color, port, detect_no, index):
+    if detect_no == 1:
+        if port == 1:
+            if index == 0:
+                color_state.cc[2][2] = color
+            elif index == 1:
+                color_state.ec[2][0] = color
+            elif index == 2:
+                color_state.cc[6][1] = color
+            elif index == 3:
+                color_state.cc[2][1] = color
+            elif index == 4:
+                color_state.ec[2][1] = color
+            elif index == 5:
+                color_state.cc[6][2] = color
+        elif port == 2:
+            if index == 0:
+                color_state.cc[0][2] = color
+            elif index == 1:
+                color_state.ec[0][0] = color
+            elif index == 2:
+                color_state.cc[4][1] = color
+            elif index == 3:
+                color_state.cc[0][1] = color
+            elif index == 4:
+                color_state.ec[0][1] = color
+            elif index == 5:
+                color_state.cc[4][2] = color
+        elif port == 3:
+            if index == 0:
+                color_state.cc[1][2] = color
+            elif index == 1:
+                color_state.ec[1][1] = color
+            elif index == 2:
+                color_state.cc[5][1] = color
+            elif index == 3:
+                color_state.cc[1][1] = color
+            elif index == 4:
+                color_state.ec[1][0] = color
+            elif index == 5:
+                color_state.cc[5][2] = color
+        elif port == 4:
+            if index == 0:
+                color_state.cc[3][2] = color
+            elif index == 1:
+                color_state.ec[3][1] = color
+            elif index == 2:
+                color_state.cc[7][1] = color
+            elif index == 3:
+                color_state.cc[3][1] = color
+            elif index == 4:
+                color_state.ec[3][0] = color
+            elif index == 5:
+                color_state.cc[7][2] = color
+    if detect_no == 2:
+        if port == 1:
+            if index == 0:
+                color_state.cc[6][0] = color
+            elif index == 1:
+                color_state.ec[9][0] = color
+            elif index == 2:
+                color_state.cc[5][0] = color
+            elif index == 4:
+                color_state.ec[9][1] = color
+        if port == 2:
+            if index == 0:
+                color_state.cc[4][0] = color
+            elif index == 1:
+                color_state.ec[11][0] = color
+            elif index == 2:
+                color_state.cc[7][0] = color
+            elif index == 4:
+                color_state.ec[11][1] = color
+        if port == 3:
+            if index == 1:
+                color_state.ec[5][1] = color
+            elif index == 3:
+                color_state.cc[2][0] = color
+            elif index == 4:
+                color_state.ec[5][0] = color
+            elif index == 5:
+                color_state.cc[1][0] = color
+        if port == 4:
+            if index == 1:
+                color_state.ec[7][1] = color
+            elif index == 3:
+                color_state.cc[0][0] = color
+            elif index == 4:
+                color_state.ec[7][0] = color
+            elif index == 5:
+                color_state.cc[3][0] = color
+    elif detect_no == 3:
+        if port == 1:
+            if index == 1:
+                color_state.ec[6][1] = color
+            elif index == 4:
+                color_state.ec[6][0] = color
+        if port == 2:
+            if index == 1:
+                color_state.ec[4][1] = color
+            elif index == 4:
+                color_state.ec[4][0] = color
+        if port == 3:
+            if index == 1:
+                color_state.ec[4][0] = color
+            elif index == 4:
+                color_state.ec[4][1] = color
+        if port == 4:
+            if index == 1:
+                color_state.ec[10][0] = color
+            elif index == 4:
+                color_state.ec[10][1] = color
 
 k_nn = knn.K_NN(k = 1)
 train_red = [[5.64, 164.77, 155.87]]
@@ -277,10 +194,10 @@ class Camera:
         v = imgBoxHsv.T[2].flatten().mean()
 
         # HSV平均値を出力
-        hsv = [h, s, v]
+        # hsv = [h, s, v]
         # print(list(map(round, hsv, [2]*len(hsv))))
 
-        return [h, s, v]
+        return [round(h, 3), round(s, 3), round(v, 3)]
 
     def Identificate_color(self, hsv):
         k_nn.fit(train_data, label)
@@ -289,47 +206,45 @@ class Camera:
         # print(color)
         return color
 
-    def camera2color_state(self):
+    def camera2color_state(self, detect_no):
         img = cv2.imread(f'picture/webcam{self.port}.jpg')
 
         lateral = 30        
-        for i in range(12):
+        for i in range(len(self.xy)):
             # 対象範囲を切り出し
             imgBox = img[self.xy[i][1]: self.xy[i][1]+lateral, self.xy[i][0]: self.xy[i][0]+lateral]
             # HSVの平均値を取得
             hsv = self.Get_hsv(imgBox)
-            print('')
-            print('### index = ', i)
+            # print('')
+            # print('### index = ', i)
             color = self.Identificate_color(hsv)
-            Set_color_state(color, self.port, i)
+            Set_color_state(color, self.port, detect_no, i)
 
         # draw rectangle
         # cv2.rectangle(img, (self.xy[6][0], self.xy[6][1]), (self.xy[6][0]+lateral, self.xy[][1]+lateral), (255, 0, 0), thickness=4)
-        for i in range(12):
-            cv2.rectangle(img, (self.xy[i][0], self.xy[i][1]), (self.xy[i][0]+lateral, self.xy[i][1]+lateral), (255, 0, 0), thickness=4)
+        for i in range(len(self.xy)):
+            cv2.rectangle(img, (self.xy[i][0], self.xy[i][1]), (self.xy[i][0]+lateral, self.xy[i][1]+lateral), (255, 0, 0), thickness=2)
 
-        print("cc = ", color_state.cc)
-        print("ec = ", color_state.ec)
+        # print("cc = ", color_state.cc)
+        # print("ec = ", color_state.ec)
         cv2.imwrite(f'picture/webcam{self.port}.jpg', img)
 
     def camera2train_data(self, train_no):
         img = cv2.imread(f'picture/webcam{self.port}.jpg')
 
         lateral = 30        
-        for i in range(12):
+        for i in range(len(self.xy)):
             # 対象範囲を切り出し
             imgBox = img[self.xy[i][1]: self.xy[i][1]+lateral, self.xy[i][0]: self.xy[i][0]+lateral]
             # HSVの平均値を取得
             hsv = self.Get_hsv(imgBox)
-            if train_no == 1:
-                Set_train_data1(hsv, self.port, i)
-            elif train_no == 2:
-                Set_train_data2(hsv, self.port, i)
+            Set_train_data(hsv, self.port, train_no, i)
+
 
         # draw rectangle
         # cv2.rectangle(img, (self.xy[6][0], self.xy[6][1]), (self.xy[6][0]+lateral, self.xy[][1]+lateral), (255, 0, 0), thickness=4)
-        for i in range(12):
-            cv2.rectangle(img, (self.xy[i][0], self.xy[i][1]), (self.xy[i][0]+lateral, self.xy[i][1]+lateral), (255, 0, 0), thickness=4)
+        for i in range(len(self.xy)):
+            cv2.rectangle(img, (self.xy[i][0], self.xy[i][1]), (self.xy[i][0]+lateral, self.xy[i][1]+lateral), (255, 0, 0), thickness=2)
 
         cv2.imwrite(f'picture/webcam{self.port}.jpg', img)
 
@@ -347,13 +262,14 @@ class Camera:
                 cv2.imwrite(f'picture/webcam{self.port}.jpg', image)
                 capture.release()
                 cv2.destroyAllWindows()
+                print(f"finish Webcam{self.port}")
                 break
 
-xy_camera1 = [[460, 50], [590, 50], [460, 190], [590, 190], [460, 330], [590, 330], [525, 450],
-              [360, 380], [400, 490], [690, 380], [650, 490], [710, 515]]
+x1 = 280
+y1 = 60
+xy_camera1 = [[x1, y1], [x1, y1+100], [x1, y1+200], [x1+100, y1], [x1+100, y1+100], [x1+100, y1+200]]
 
-xy_camera3 = [[260, 170], [300, 230], [220, 230], [180, 130], [140, 190], [340, 130], [380, 190],
-              [400, 110], [300, 340], [220, 340], [300, 430], [220, 430]]
+xy_camera3 = [[260, 170], [300, 230], [220, 230], [180, 130], [140, 190], [340, 130]]
 
 usb_device = usbVideoDevice.UsbVideoDevice()
 camera1 = Camera(xy_camera1, 1, usb_device.getId(1))
@@ -367,15 +283,38 @@ def Take_pictures():
     camera3.Take_picture()
     camera4.Take_picture()
 
+def Detect_colors(detect_no):
+    camera1.camera2color_state(detect_no)
+    camera2.camera2color_state(detect_no)
+    camera3.camera2color_state(detect_no)
+    camera4.camera2color_state(detect_no)
+
+def Detect_color_state(detect_no):
+    Take_pictures()
+    Detect_colors(detect_no)
+
 def Get_color_state():
-    # camera1.camera2color_state()
-#     camera2.camera2color_state()
-#     camera3.camera2color_state()
-#     camera4.camera2color_state()
     return color_state
 
-def Set_train_data(train_no):
-    camera1.camera2train_data(train_no)
-    camera2.camera2train_data(train_no)
-    camera3.camera2train_data(train_no)
-    camera4.camera2train_data(train_no)
+def Print_train_data():
+    print("train_red =", red)
+    print("train_blue =", blue)
+    print("train_green =", green)
+    print("train_yellow =", yellow)
+    print("train_orenge =", orenge)
+    print("train_white =", white)
+
+def Train_data(train_no):
+    if train_no == 1:
+        print("set train data1")
+        camera1.Take_picture()
+        camera2.Take_picture()
+        camera1.camera2train_data(train_no)
+        camera2.camera2train_data(train_no)
+    elif train_no == 2:
+        print("set train data2")
+        camera1.Take_picture()
+        camera3.Take_picture()
+        camera1.camera2train_data(train_no)
+        camera3.camera2train_data(train_no)
+

@@ -29,7 +29,7 @@ class K_NN:
     
     def predict(self, validation_data):
         # k番目までのindexを求める shape(test_num, self.k)となる
-        print("verification data:\n",validation_data)
+        # print("verification data:\n",validation_data)
         neigh_ind = self.neighbors(validation_data)
         # stats.modeでその最頻値を求める. shape(test_num, 1) . _は最頻値のカウント数
         # self.label_indices は [0 0 1 1] で、元データの各点のラベルを表す
