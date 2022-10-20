@@ -118,10 +118,10 @@ def Set_solved_state(mode, current_color_state):
 
 # 18種類の1手操作を全部定義する
 moves = {
-    'U': State([3, 0, 1, 2, 4, 5, 6, 7],
-               [0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 1, 2, 3, 7, 4, 5, 6, 8, 9, 10, 11],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    # 'U': State([3, 0, 1, 2, 4, 5, 6, 7],
+    #            [0, 0, 0, 0, 0, 0, 0, 0],
+    #            [0, 1, 2, 3, 7, 4, 5, 6, 8, 9, 10, 11],
+    #            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
     'D': State([0, 1, 2, 3, 5, 6, 7, 4],
                [0, 0, 0, 0, 0, 0, 0, 0],
                [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 8],
@@ -188,7 +188,7 @@ def is_move_available(prev_move, move):
     return True
 
 def Create_scramble(scramble_length):
-    move_names = "U U' U2 D D' D2 L L' L2 R R' R2 F F' F2 B B' B2"
+    move_names = "D D' D2 L L' L2 R R' R2 F F' F2 B B' B2"
     random_scramble = ""
     prev_move = None
     for _ in range(scramble_length):

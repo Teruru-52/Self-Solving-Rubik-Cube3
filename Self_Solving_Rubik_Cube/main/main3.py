@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
       print("start solving")
       start = time.time()
-      motor.Solve(solution)
+      # motor.Solve(solution)
       print(f"Solving Finished! ({time.time() - start:.5f} sec.)")
       sleep(0.5)
 

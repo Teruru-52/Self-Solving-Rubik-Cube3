@@ -36,10 +36,10 @@ class State:
 
 # 18種類の1手操作を全部定義する
 moves = {
-    'U': State([3, 0, 1, 2, 4, 5, 6, 7],
-               [0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 1, 2, 3, 7, 4, 5, 6, 8, 9, 10, 11],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    # 'U': State([3, 0, 1, 2, 4, 5, 6, 7],
+    #            [0, 0, 0, 0, 0, 0, 0, 0],
+    #            [0, 1, 2, 3, 7, 4, 5, 6, 8, 9, 10, 11],
+    #            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
     'D': State([0, 1, 2, 3, 5, 6, 7, 4],
                [0, 0, 0, 0, 0, 0, 0, 0],
                [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 8],
@@ -198,76 +198,76 @@ def index_to_e_ep(index):
 
 """Phase1の遷移表"""
 """COの遷移表"""
-# print("Computing co_move_table")
-# start = time.time()
-# co_move_table = [[0] * len(move_names) for _ in range(NUM_CO)]
-# for i in range(NUM_CO):
-#     state_ = State(
-#         [0] * 8,
-#         index_to_co(i),
-#         [0] * 12,
-#         [0] * 12
-#     )
-#     for i_move, move_name in enumerate(move_names):
-#         new_state = state_.apply_move(moves[move_name])
-#         co_move_table[i][i_move] = co_to_index(new_state.co)
+print("Computing co_move_table")
+start = time.time()
+co_move_table = [[0] * len(move_names) for _ in range(NUM_CO)]
+for i in range(NUM_CO):
+    state_ = State(
+        [0] * 8,
+        index_to_co(i),
+        [0] * 12,
+        [0] * 12
+    )
+    for i_move, move_name in enumerate(move_names):
+        new_state = state_.apply_move(moves[move_name])
+        co_move_table[i][i_move] = co_to_index(new_state.co)
 
-# print(f"Finished! ({time.time() - start:.5f} sec.)")
-# print("co_move_table = ", len(co_move_table))
+print(f"Finished! ({time.time() - start:.5f} sec.)")
+print("co_move_table = ", len(co_move_table))
 # print(co_move_table, file=codecs.open('co_move_table.py', 'w', 'utf-8'))
 
 """EOの遷移表"""
-# print("Computing eo_move_table")
-# start = time.time()
-# eo_move_table = [[0] * len(move_names) for _ in range(NUM_EO)]
-# for i in range(NUM_EO):
-#     state_ = State(
-#         [0] * 8,
-#         [0] * 8,
-#         [0] * 12,
-#         index_to_eo(i)
-#     )
-#     for i_move, move_name in enumerate(move_names):
-#         new_state = state_.apply_move(moves[move_name])
-#         eo_move_table[i][i_move] = eo_to_index(new_state.eo)
-# print(f"Finished! ({time.time() - start:.5f} sec.)")
+print("Computing eo_move_table")
+start = time.time()
+eo_move_table = [[0] * len(move_names) for _ in range(NUM_EO)]
+for i in range(NUM_EO):
+    state_ = State(
+        [0] * 8,
+        [0] * 8,
+        [0] * 12,
+        index_to_eo(i)
+    )
+    for i_move, move_name in enumerate(move_names):
+        new_state = state_.apply_move(moves[move_name])
+        eo_move_table[i][i_move] = eo_to_index(new_state.eo)
+print(f"Finished! ({time.time() - start:.5f} sec.)")
 # print(eo_move_table, file=codecs.open('eo_move_table.py', 'w', 'utf-8'))
 
 """E列エッジの組合せの遷移表"""
-# print("Computing e_combination_table")
-# start = time.time()
-# e_combination_table = [[0] * len(move_names) for _ in range(NUM_E_COMBINATIONS)]
-# for i in range(NUM_E_COMBINATIONS):
-#     state_ = State(
-#         [0] * 8,
-#         [0] * 8,
-#         index_to_e_combination(i),
-#         [0] * 12,
-#     )
-#     for i_move, move_name in enumerate(move_names):
-#         new_state = state_.apply_move(moves[move_name])
-#         e_combination_table[i][i_move] = e_combination_to_index(new_state.ep)
-# print(f"Finished! ({time.time() - start:.5f} sec.)")
+print("Computing e_combination_table")
+start = time.time()
+e_combination_table = [[0] * len(move_names) for _ in range(NUM_E_COMBINATIONS)]
+for i in range(NUM_E_COMBINATIONS):
+    state_ = State(
+        [0] * 8,
+        [0] * 8,
+        index_to_e_combination(i),
+        [0] * 12,
+    )
+    for i_move, move_name in enumerate(move_names):
+        new_state = state_.apply_move(moves[move_name])
+        e_combination_table[i][i_move] = e_combination_to_index(new_state.ep)
+print(f"Finished! ({time.time() - start:.5f} sec.)")
 # print(e_combination_table, file=codecs.open('e_combination_table.py', 'w', 'utf-8'))
 
 # """Phase2の遷移表"""
-move_names_ph2 = ["U", "U2", "U'", "D", "D2", "D'", "L2", "R2", "F2", "B2"]
+move_names_ph2 = ["D", "D2", "D'", "L", "L2", "L'", "R", "R2", "R'", "F2", "B2"]
 
 """CPの遷移表"""
-# print("Computing cp_move_table")
-# cp_move_table = [[0] * len(move_names_ph2) for _ in range(NUM_CP)]
-# start = time.time()
-# for i in range(NUM_CP):
-#     state_ = State(
-#         index_to_cp(i),
-#         [0] * 8,
-#         [0] * 12,
-#         [0] * 12
-#     )
-#     for i_move, move_name in enumerate(move_names_ph2):
-#         new_state = state_.apply_move(moves[move_name])
-#         cp_move_table[i][i_move] = cp_to_index(new_state.cp)
-# print(f"Finished! ({time.time() - start:.5f} sec.)")
+print("Computing cp_move_table")
+cp_move_table = [[0] * len(move_names_ph2) for _ in range(NUM_CP)]
+start = time.time()
+for i in range(NUM_CP):
+    state_ = State(
+        index_to_cp(i),
+        [0] * 8,
+        [0] * 12,
+        [0] * 12
+    )
+    for i_move, move_name in enumerate(move_names_ph2):
+        new_state = state_.apply_move(moves[move_name])
+        cp_move_table[i][i_move] = cp_to_index(new_state.cp)
+print(f"Finished! ({time.time() - start:.5f} sec.)")
 # print(cp_move_table, file=codecs.open('cp_move_table.py', 'w', 'utf-8'))
 
 """UD面エッジのEPの遷移表"""
@@ -285,7 +285,7 @@ for i in range(NUM_UD_EP):
         new_state = state_.apply_move(moves[move_name])
         ud_ep_move_table[i][i_move] = ud_ep_to_index(new_state.ep[4:])
 print(f"Finished! ({time.time() - start:.5f} sec.)")
-# print(ud_ep_move_table, file=codecs.open('ud_ep_move_table.py', 'w', 'utf-8'))
+print(ud_ep_move_table, file=codecs.open('ud_ep_move_table.py', 'w', 'utf-8'))
 
 """E列エッジのEPの遷移表"""
 print("Computing e_edge_permutation_move_table")
@@ -302,77 +302,77 @@ for i in range(NUM_E_EP):
         new_state = state_.apply_move(moves[move_name])
         e_ep_move_table[i][i_move] = e_ep_to_index(new_state.ep[:4])
 print(f"Finished! ({time.time() - start:.5f} sec.)")
-# print(e_ep_move_table, file=codecs.open('e_ep_move_table.py', 'w', 'utf-8'))
+print(e_ep_move_table, file=codecs.open('e_ep_move_table.py', 'w', 'utf-8'))
 
 """Phase1の枝刈り表"""
 """EOを無視して、COとE列だけ考えたときの最短手数表"""
-# print("Computing co_eec_prune_table")
-# start = time.time()
-# co_eec_prune_table = [[-1] * NUM_E_COMBINATIONS for _ in range(NUM_CO)]
-# co_eec_prune_table[0][0] = 0
-# distance = 0
-# num_filled = 1
-# while num_filled != NUM_CO * NUM_E_COMBINATIONS:
-#     print(f"distance = {distance}")
-#     print(f"num_filled = {num_filled}")
-#     for i_co in range(NUM_CO):
-#         for i_eec in range(NUM_E_COMBINATIONS):
-#             if co_eec_prune_table[i_co][i_eec] == distance:
-#                 for i_move in range(len(move_names)):
-#                     next_co = co_move_table[i_co][i_move]
-#                     next_eec = e_combination_table[i_eec][i_move]
-#                     if co_eec_prune_table[next_co][next_eec] == -1:
-#                         co_eec_prune_table[next_co][next_eec] = distance + 1
-#                         num_filled += 1
-#     distance += 1
-# print(f"Finished! ({time.time() - start:.5f} sec.)")
+print("Computing co_eec_prune_table")
+start = time.time()
+co_eec_prune_table = [[-1] * NUM_E_COMBINATIONS for _ in range(NUM_CO)]
+co_eec_prune_table[0][0] = 0
+distance = 0
+num_filled = 1
+while num_filled != NUM_CO * NUM_E_COMBINATIONS:
+    print(f"distance = {distance}")
+    print(f"num_filled = {num_filled}")
+    for i_co in range(NUM_CO):
+        for i_eec in range(NUM_E_COMBINATIONS):
+            if co_eec_prune_table[i_co][i_eec] == distance:
+                for i_move in range(len(move_names)):
+                    next_co = co_move_table[i_co][i_move]
+                    next_eec = e_combination_table[i_eec][i_move]
+                    if co_eec_prune_table[next_co][next_eec] == -1:
+                        co_eec_prune_table[next_co][next_eec] = distance + 1
+                        num_filled += 1
+    distance += 1
+print(f"Finished! ({time.time() - start:.5f} sec.)")
 # print(co_eec_prune_table, file=codecs.open('co_eec_prune_table.py', 'w', 'utf-8'))
 
 """COを無視して、EOとE列だけ考えたときの最短手数表"""
-# print("Computing eo_eec_prune_table")
-# start = time.time()
-# eo_eec_prune_table = [[-1] * NUM_E_COMBINATIONS for _ in range(NUM_EO)]
-# eo_eec_prune_table[0][0] = 0
-# distance = 0
-# num_filled = 1
-# while num_filled != NUM_EO * NUM_E_COMBINATIONS:
-#     print(f"distance = {distance}")
-#     print(f"num_filled = {num_filled}")
-#     for i_eo in range(NUM_EO):
-#         for i_eec in range(NUM_E_COMBINATIONS):
-#             if eo_eec_prune_table[i_eo][i_eec] == distance:
-#                 for i_move in range(len(move_names)):
-#                     next_eo = eo_move_table[i_eo][i_move]
-#                     next_eec = e_combination_table[i_eec][i_move]
-#                     if eo_eec_prune_table[next_eo][next_eec] == -1:
-#                         eo_eec_prune_table[next_eo][next_eec] = distance + 1
-#                         num_filled += 1
-#     distance += 1
-# print(f"Finished! ({time.time() - start:.5f} sec.)") 
+print("Computing eo_eec_prune_table")
+start = time.time()
+eo_eec_prune_table = [[-1] * NUM_E_COMBINATIONS for _ in range(NUM_EO)]
+eo_eec_prune_table[0][0] = 0
+distance = 0
+num_filled = 1
+while num_filled != NUM_EO * NUM_E_COMBINATIONS:
+    print(f"distance = {distance}")
+    print(f"num_filled = {num_filled}")
+    for i_eo in range(NUM_EO):
+        for i_eec in range(NUM_E_COMBINATIONS):
+            if eo_eec_prune_table[i_eo][i_eec] == distance:
+                for i_move in range(len(move_names)):
+                    next_eo = eo_move_table[i_eo][i_move]
+                    next_eec = e_combination_table[i_eec][i_move]
+                    if eo_eec_prune_table[next_eo][next_eec] == -1:
+                        eo_eec_prune_table[next_eo][next_eec] = distance + 1
+                        num_filled += 1
+    distance += 1
+print(f"Finished! ({time.time() - start:.5f} sec.)") 
 # print(eo_eec_prune_table, file=codecs.open('eo_eec_prune_table.py', 'w', 'utf-8'))
 
 """Phase2の枝刈り表"""
 """UD面のエッジを無視して、CPとE列エッジだけ揃えるときの最短手数表"""
-# print("Computing cp_eep_prune_table")
-# start = time.time()
-# cp_eep_prune_table = [[-1] * NUM_E_EP for _ in range(NUM_CP)]
-# cp_eep_prune_table[0][0] = 0
-# distance = 0
-# num_filled = 1
-# while num_filled != NUM_CP * NUM_E_EP:
-#     print(f"distance = {distance}")
-#     print(f"num_filled = {num_filled}")
-#     for i_cp in range(NUM_CP):
-#         for i_eep in range(NUM_E_EP):
-#             if cp_eep_prune_table[i_cp][i_eep] == distance:
-#                 for i_move in range(len(move_names_ph2)):
-#                     next_cp = cp_move_table[i_cp][i_move]
-#                     next_eep = e_ep_move_table[i_eep][i_move]
-#                     if cp_eep_prune_table[next_cp][next_eep] == -1:
-#                         cp_eep_prune_table[next_cp][next_eep] = distance + 1
-#                         num_filled += 1
-#     distance += 1
-# print(f"Finished! ({time.time() - start:.5f} sec.)")
+print("Computing cp_eep_prune_table")
+start = time.time()
+cp_eep_prune_table = [[-1] * NUM_E_EP for _ in range(NUM_CP)]
+cp_eep_prune_table[0][0] = 0
+distance = 0
+num_filled = 1
+while num_filled != NUM_CP * NUM_E_EP:
+    print(f"distance = {distance}")
+    print(f"num_filled = {num_filled}")
+    for i_cp in range(NUM_CP):
+        for i_eep in range(NUM_E_EP):
+            if cp_eep_prune_table[i_cp][i_eep] == distance:
+                for i_move in range(len(move_names_ph2)):
+                    next_cp = cp_move_table[i_cp][i_move]
+                    next_eep = e_ep_move_table[i_eep][i_move]
+                    if cp_eep_prune_table[next_cp][next_eep] == -1:
+                        cp_eep_prune_table[next_cp][next_eep] = distance + 1
+                        num_filled += 1
+    distance += 1
+print(f"Finished! ({time.time() - start:.5f} sec.)")
 # print(cp_eep_prune_table, file=codecs.open('cp_eep_prune_table.py', 'w', 'utf-8'))
 
 """CPを無視して、UD面のエッジとE列エッジだけ揃えるときの最短手数表"""

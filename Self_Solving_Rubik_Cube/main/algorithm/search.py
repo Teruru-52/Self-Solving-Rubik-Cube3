@@ -141,7 +141,7 @@ def index_to_e_ep(index):
                 eep[j] += 1
     return eep
 
-move_names_ph2 = ["U", "U2", "U'", "D", "D2", "D'", "L2", "R2", "F2", "B2"]
+move_names_ph2 = ["D", "D2", "D'", "L", "L2", "L'", "R", "R2", "R'", "F2", "B2"]
 move_names_to_index = {move_name: i for i, move_name in enumerate(move_names)}
 
 class Search1:
