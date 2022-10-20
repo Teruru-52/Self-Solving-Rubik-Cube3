@@ -14,63 +14,45 @@ class Motor:
     def Solve(self, scramble):
         for move_name in scramble.split(" "):
             if move_name == "U":
-                # print("U")
-                self.motor_U.Step_CW(50)
+                self.motor_U.Step_CW(51)
             elif move_name == "U'":
-                # print("U'")
                 self.motor_U.Step_CCW(50)
             elif move_name == "U2":
-                # print("U2")
-                self.motor_U.Step_CW(100)
+                self.motor_U.Step_CW(101)
 
             elif move_name == "D":
-                # print("D")
-                self.motor_D.Step_CW(52)
+                self.motor_D.Step_CW(50)
             elif move_name == "D'":
-                # print("D'")
-                self.motor_D.Step_CCW(51)
+                self.motor_D.Step_CCW(50)
             elif move_name == "D2":
-                # print("D2")
-                self.motor_D.Step_CW(102)
+                self.motor_D.Step_CW(100)
 
             elif move_name == "L":
-                # print("L")
                 self.motor_L.Step_CW(50)
             elif move_name == "L'":
-                # print("L'")
                 self.motor_L.Step_CCW(50)
             elif move_name == "L2":
-                # print("L2")
                 self.motor_L.Step_CW(100)
 
             elif move_name == "R":
-                # print("R")
-                self.motor_R.Step_CW(50)
+                self.motor_R.Step_CW(51)
             elif move_name == "R'":
-                # print("R'")
                 self.motor_R.Step_CCW(50)
             elif move_name == "R2":
-                # print("R2")
-                self.motor_R.Step_CW(100)
+                self.motor_R.Step_CW(101)
 
             elif move_name == "F":
-                # print("F")
                 self.motor_F.Step_CW(50)
             elif move_name == "F'":
-                # print("F'")
                 self.motor_F.Step_CCW(50)
             elif move_name == "F2":
-                # print("F2")
                 self.motor_F.Step_CW(100)
 
             elif move_name == "B":
-                # print("B")
                 self.motor_B.Step_CW(50)
             elif move_name == "B'":
-                # print("B'")
                 self.motor_B.Step_CCW(50)
             elif move_name == "B2":
-                # print("B2")
                 self.motor_B.Step_CW(100)
 
             else:

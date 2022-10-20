@@ -14,16 +14,16 @@ class Motor:
     def Solve(self, scramble):
         for move_name in scramble.split(" "):
             if move_name == "U":
-                self.motor_U.Step_CW(50)
+                self.motor_U.Step_CW(51)
             elif move_name == "U'":
                 self.motor_U.Step_CCW(50)
             elif move_name == "U2":
-                self.motor_U.Step_CW(100)
+                self.motor_U.Step_CW(101)
 
             elif move_name == "D":
-                self.motor_D.Step_CW(52)
+                self.motor_D.Step_CW(50)
             elif move_name == "D'":
-                self.motor_D.Step_CCW(51)
+                self.motor_D.Step_CCW(50)
             elif move_name == "D2":
                 self.motor_D.Step_CW(100)
 
@@ -35,11 +35,11 @@ class Motor:
                 self.motor_L.Step_CW(100)
 
             elif move_name == "R":
-                self.motor_R.Step_CW(50)
+                self.motor_R.Step_CW(51)
             elif move_name == "R'":
                 self.motor_R.Step_CCW(50)
             elif move_name == "R2":
-                self.motor_R.Step_CW(100)
+                self.motor_R.Step_CW(101)
 
             elif move_name == "F":
                 self.motor_F.Step_CW(50)

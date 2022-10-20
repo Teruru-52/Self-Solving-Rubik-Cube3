@@ -34,31 +34,30 @@ if __name__ == '__main__':
 
     """Webcamで画像を撮影し, scrambled_stateを求める"""
     print('start detecting colors')
-    detect_color.Detect_color_state(1)
+    detect_color.Detect_color_state('solve', 1)
     motor.Solve("R L")
-    detect_color.Detect_color_state(2)
+    detect_color.Detect_color_state('solve', 2)
     motor.Solve("R' L' F B")
-    detect_color.Detect_color_state(3)
+    detect_color.Detect_color_state('solve', 3)
     motor.Solve("F' B'")
-    # color_state = detect_color.Get_color_state()
-    # scrambled_state = state.Set_solved_state(mode, color_state)
-    # print("scrambled_state: ", scrambled_state)
+    color_state = detect_color.Get_color_state()
+    scrambled_state = state.Set_solved_state(mode, color_state)
 
     """Phase2探索プログラムの動作確認"""
-    # search2 = search.Search2(scrambled_state)
-    # start = time.time()
-    # solution = search2.start_search()
-    # print(f"Phase1,2 Finished! ({time.time() - start:.5f} sec.)")
-    # if solution:
-    #   print(f'Solution: "{solution}"')
-    # else:
-    #   print("Solution not found.")
+    search2 = search.Search2(scrambled_state)
+    start = time.time()
+    solution = search2.start_search()
+    print(f"Phase1,2 Finished! ({time.time() - start:.5f} sec.)")
+    if solution:
+      print(f'Solution: "{solution}"')
+    else:
+      print("Solution not found.")
 
-    # print("start solving")
-    # start = time.time()
+    print("start solving")
+    start = time.time()
     # motor.Solve(solution)
-    # print(f"Solving Finished! ({time.time() - start:.5f} sec.)")
-    # sleep(0.5)
+    print(f"Solving Finished! ({time.time() - start:.5f} sec.)")
+    sleep(0.5)
 
     motor.Cleanup()
     

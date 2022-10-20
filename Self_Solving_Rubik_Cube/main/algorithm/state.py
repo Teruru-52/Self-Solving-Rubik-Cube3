@@ -110,6 +110,10 @@ def Set_solved_state(mode, current_color_state):
     print("mode: ", mode)
     solved_color_state = Set_state(mode)
     initial_state = color2state(current_color_state, solved_color_state)
+    print("cp =", initial_state.cp)
+    print("co =", initial_state.co)
+    print("ep =", initial_state.ep)
+    print("eo =", initial_state.eo)
     return initial_state
 
 # 18種類の1手操作を全部定義する

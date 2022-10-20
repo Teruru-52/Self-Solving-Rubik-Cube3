@@ -6,13 +6,76 @@ from time import sleep
 if __name__ == '__main__':
     motor = motors.Motor()
 
-    random_scramble = "R2 D2 L D L' F2 U L F' R U2 R' D' B L D' B U2 B2 L2"
-    solution = "U L2 U F' R2 U2 L D' L2 B U2 B2 U B2 D' R2 U' F2 U R2 D'"
-
     try:
-        motor.Solve(random_scramble)
-        sleep(2)
-        motor.Solve(solution)
+        for _ in range(4):
+            motor.Solve("R")
+            sleep(0.3)
+        for _ in range(4):
+            motor.Solve("R'")
+            sleep(0.3)
+        for _ in range(2):
+            motor.Solve("R2")
+            sleep(0.3)
+
+        sleep(0.5)
+        
+        for _ in range(4):
+            motor.Solve("L")
+            sleep(0.3)
+        for _ in range(4):
+            motor.Solve("L'")
+            sleep(0.3)
+        for _ in range(2):
+            motor.Solve("L2")
+            sleep(0.3)
+
+        sleep(0.5)
+        
+        for _ in range(4):
+            motor.Solve("F")
+            sleep(0.3)
+        for _ in range(4):
+            motor.Solve("F'")
+            sleep(0.3)
+        for _ in range(2):
+            motor.Solve("F2")
+            sleep(0.3)
+
+        sleep(0.5)
+        
+        for _ in range(4):
+            motor.Solve("B")
+            sleep(0.3)
+        for _ in range(4):
+            motor.Solve("B'")
+            sleep(0.3)
+        for _ in range(2):
+            motor.Solve("B2")
+            sleep(0.3)
+
+        sleep(0.5)
+        
+        for _ in range(4):
+            motor.Solve("U")
+            sleep(0.3)
+        for _ in range(4):
+            motor.Solve("U'")
+            sleep(0.3)
+        for _ in range(2):
+            motor.Solve("U2")
+            sleep(0.3)
+
+        sleep(0.5)
+        
+        for _ in range(4):
+            motor.Solve("D")
+            sleep(0.3)
+        for _ in range(4):
+            motor.Solve("D'")
+            sleep(0.3)
+        for _ in range(2):
+            motor.Solve("D2")
+            sleep(0.3)
 
     except KeyboardInterrupt  :         #Ctl+Cが押されたらループを終了
         print("\nCtl+C")
