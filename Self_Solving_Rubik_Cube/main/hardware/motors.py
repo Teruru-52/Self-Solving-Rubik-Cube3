@@ -57,7 +57,7 @@ class Motor:
 
             else:
                 print("no move_name")
-            # sleep(0.3)
+            # sleep(0.5)
 
     def Cleanup(self):
         GPIO.cleanup()

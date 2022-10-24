@@ -24,11 +24,11 @@ if __name__ == '__main__':
     mode_scramble += ['vertical_stripe']
     # 3回繰り返すと元に戻る
     mode_scramble += ['heso']
-    mode_scramble += ['cubeincube']
-    mode_scramble += ['mini_cubeincube']
+    # mode_scramble += ['cubeincube']
+    # mode_scramble += ['mini_cubeincube']
     # 6回繰り返すと元に戻る
-    mode_scramble += ['T']
-    # mode_scramble += 'vortex'
+    # mode_scramble += ['T']
+    # mode_scramble += ['vortex']
     mode_scramble += ['normal']
     print(mode_scramble)
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
       print("start solving")
       start = time.time()
-      # motor.Solve(solution)
+      motor.Solve(solution)
       print(f"Solving Finished! ({time.time() - start:.5f} sec.)")
       sleep(0.5)
 
