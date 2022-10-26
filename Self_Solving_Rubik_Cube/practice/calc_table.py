@@ -214,7 +214,7 @@ for i in range(NUM_CO):
 
 print(f"Finished! ({time.time() - start:.5f} sec.)")
 print("co_move_table = ", len(co_move_table))
-# print(co_move_table, file=codecs.open('co_move_table.py', 'w', 'utf-8'))
+print(co_move_table, file=codecs.open('co_move_table.py', 'w', 'utf-8'))
 
 """EOの遷移表"""
 print("Computing eo_move_table")
@@ -231,7 +231,7 @@ for i in range(NUM_EO):
         new_state = state_.apply_move(moves[move_name])
         eo_move_table[i][i_move] = eo_to_index(new_state.eo)
 print(f"Finished! ({time.time() - start:.5f} sec.)")
-# print(eo_move_table, file=codecs.open('eo_move_table.py', 'w', 'utf-8'))
+print(eo_move_table, file=codecs.open('eo_move_table.py', 'w', 'utf-8'))
 
 """E列エッジの組合せの遷移表"""
 print("Computing e_combination_table")
@@ -248,10 +248,10 @@ for i in range(NUM_E_COMBINATIONS):
         new_state = state_.apply_move(moves[move_name])
         e_combination_table[i][i_move] = e_combination_to_index(new_state.ep)
 print(f"Finished! ({time.time() - start:.5f} sec.)")
-# print(e_combination_table, file=codecs.open('e_combination_table.py', 'w', 'utf-8'))
+print(e_combination_table, file=codecs.open('e_combination_table.py', 'w', 'utf-8'))
 
 # """Phase2の遷移表"""
-move_names_ph2 = ["D", "D2", "D'", "L", "L2", "L'", "R", "R2", "R'", "F2", "B2"]
+move_names_ph2 = ["D", "D2", "D'", "L", "L2", "L'", "R2", "F2", "B2"]
 
 """CPの遷移表"""
 print("Computing cp_move_table")
@@ -268,7 +268,7 @@ for i in range(NUM_CP):
         new_state = state_.apply_move(moves[move_name])
         cp_move_table[i][i_move] = cp_to_index(new_state.cp)
 print(f"Finished! ({time.time() - start:.5f} sec.)")
-# print(cp_move_table, file=codecs.open('cp_move_table.py', 'w', 'utf-8'))
+print(cp_move_table, file=codecs.open('cp_move_table.py', 'w', 'utf-8'))
 
 """UD面エッジのEPの遷移表"""
 print("Computing ud_ep_move_table")
@@ -326,7 +326,7 @@ while num_filled != NUM_CO * NUM_E_COMBINATIONS:
                         num_filled += 1
     distance += 1
 print(f"Finished! ({time.time() - start:.5f} sec.)")
-# print(co_eec_prune_table, file=codecs.open('co_eec_prune_table.py', 'w', 'utf-8'))
+print(co_eec_prune_table, file=codecs.open('co_eec_prune_table.py', 'w', 'utf-8'))
 
 """COを無視して、EOとE列だけ考えたときの最短手数表"""
 print("Computing eo_eec_prune_table")
@@ -349,7 +349,7 @@ while num_filled != NUM_EO * NUM_E_COMBINATIONS:
                         num_filled += 1
     distance += 1
 print(f"Finished! ({time.time() - start:.5f} sec.)") 
-# print(eo_eec_prune_table, file=codecs.open('eo_eec_prune_table.py', 'w', 'utf-8'))
+print(eo_eec_prune_table, file=codecs.open('eo_eec_prune_table.py', 'w', 'utf-8'))
 
 """Phase2の枝刈り表"""
 """UD面のエッジを無視して、CPとE列エッジだけ揃えるときの最短手数表"""
@@ -373,7 +373,7 @@ while num_filled != NUM_CP * NUM_E_EP:
                         num_filled += 1
     distance += 1
 print(f"Finished! ({time.time() - start:.5f} sec.)")
-# print(cp_eep_prune_table, file=codecs.open('cp_eep_prune_table.py', 'w', 'utf-8'))
+print(cp_eep_prune_table, file=codecs.open('cp_eep_prune_table.py', 'w', 'utf-8'))
 
 """CPを無視して、UD面のエッジとE列エッジだけ揃えるときの最短手数表"""
 print("Computing udep_eep_prune_table")
@@ -396,4 +396,4 @@ while num_filled != NUM_UD_EP * NUM_E_EP:
                         num_filled += 1
     distance += 1
 print(f"Finished! ({time.time() - start:.5f} sec.)") 
-# print(udep_eep_prune_table, file=codecs.open('udep_eep_prune_table.py', 'w', 'utf-8'))
+print(udep_eep_prune_table, file=codecs.open('udep_eep_prune_table.py', 'w', 'utf-8'))
