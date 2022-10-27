@@ -44,6 +44,10 @@ checker2_color_state = detect_color.ColorState(
     [['Y','O','G'], ['Y','G','R'], ['Y','R','B'], ['Y','B','O'], ['W','G','O'], ['W','R','G'], ['W','B','R'], ['W','O','B']],
     normal_color_state.ec
 )
+checker3_color_state = detect_color.ColorState(
+    [['B','Y','R'], ['B','R','W'], ['B','W','O'], ['B','O','Y'], ['G','R','Y'], ['G','W','R'], ['G','O','W'], ['G','Y','O']],
+    normal_color_state.ec
+)
 heso_color_state = detect_color.ColorState(
     [['R','B','Y'], ['R','Y','G'], ['R','G','W'], ['R','W','B'], ['O','Y','B'], ['O','G','Y'], ['O','W','G'], ['O','B','W']],
     [['Y','B'], ['Y','G'], ['W','G'], ['W','B'], ['R','Y'], ['R','G'], ['R','W'], ['R','B'], ['O','Y'], ['O','G'], ['O','W'], ['O','B']]
@@ -64,13 +68,29 @@ mini_cubeincube_color_state = detect_color.ColorState(
     [['W','O','B'], ['R','W','B'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['O','G','Y']],
     normal_color_state.ec
 )
+cubeincubeincube_color_state = detect_color.ColorState(
+    [['B','Y','R'], ['B','R','W'], ['B','W','O'], ['B','O','Y'], ['G','R','Y'], ['G','W','R'], ['G','O','W'], ['G','Y','O']],
+    [['R','Y'], ['B','R'], ['O','W'], ['G','O'], ['W','B'], ['W','R'], ['B','O'], ['B','Y'], ['G','R'], ['G','W'], ['Y','G'], ['Y','O']]
+)
 vortex_color_state = detect_color.ColorState(
     [['R','G','W'], ['W','B','R'], ['R','B','Y'], ['R','Y','G'], ['O','W','G'], ['O','B','W'], ['O','Y','B'], ['Y','O','G']],
-    [['W','G'], ['W','R'], ['Y','B'], ['Y','O'], ['R','B'], ['W','B'], ['R','Y'], ['R','G'], ['O','W'], ['O','B'], ['O','G'], ['Y','O']]
+    [['W','G'], ['W','R'], ['Y','B'], ['Y','O'], ['R','B'], ['W','B'], ['R','Y'], ['R','G'], ['O','W'], ['O','B'], ['O','G'], ['Y','G']]
 )
 vertical_stripe_color_state = detect_color.ColorState(
     [['W','B','R'], ['W','O','B'], ['W','G','O'], ['W','R','G'], ['Y','R','B'], ['Y','B','O'], ['Y','O','G'], ['Y','G','R']],
     [['R','B'], ['O','B'], ['O','G'], ['R','G'], ['W','B'], ['W','R'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['Y','G'], ['Y','O']]
+)
+angel_fish_color_state = detect_color.ColorState(
+    [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']],
+    [['B','O'], ['W','B'], ['G','R'], ['G','O'], ['R','W'], ['R','B'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['Y','G'], ['Y','O']]
+)
+convex_color_state = detect_color.ColorState(
+    [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']],
+    [['W','G'], ['B','R'], ['G','R'], ['O','Y'], ['W','B'], ['W','R'], ['R','Y'], ['W','O'], ['Y','B'], ['O','B'], ['G','O'], ['G','Y']]
+)
+ring_color_state = detect_color.ColorState(
+    [['B','Y','R'], ['B','R','W'], ['B','W','O'], ['B','O','Y'], ['G','R','Y'], ['G','W','R'], ['G','O','W'], ['G','Y','O']],
+    [['B','O'], ['R','W'], ['G','R'], ['O','Y'], ['B','R'], ['B','W'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['G','O'], ['G','Y']]
 )
 solved_color_state = normal_color_state
 
@@ -81,6 +101,8 @@ def Set_state(mode):
         color_state = checker_color_state
     elif mode == 'checker2':
         color_state = checker2_color_state
+    elif mode == 'checker3':
+        color_state = checker3_color_state
     elif mode == 'heso':
         color_state = heso_color_state
     elif mode == 'H':
@@ -91,10 +113,18 @@ def Set_state(mode):
         color_state = cubeincube_color_state
     elif mode == 'mini_cubeincube':
         color_state = mini_cubeincube_color_state
+    elif mode == 'cubeincubeincube':
+        color_state = cubeincubeincube_color_state
     elif mode == 'vortex': 
         color_state = vortex_color_state
     elif mode == 'vertical_stripe':
         color_state = vertical_stripe_color_state
+    elif mode == 'angel_fish':
+        color_state = angel_fish_color_state
+    elif mode == 'convex':
+        color_state = convex_color_state
+    elif mode == 'ring':
+        color_state = ring_color_state
     return color_state
 
 # 次の状態を完成状態としたときの各modeの状態を求める
