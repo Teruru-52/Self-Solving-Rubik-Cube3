@@ -42,9 +42,10 @@ if __name__ == '__main__':
 
     """scrambled_stateの生成"""
     """2. 完成状態からrandomに回してstateを求める"""
-    scramble_length = 20
+    scramble_length = 40
     random_scramble = state.Create_scramble(scramble_length)
     print("random_scramble: ", random_scramble)
+    print("scramble_length: ", scramble_length)
     print('start scrambling')
     motor.Solve(random_scramble)
     scrambled_state = state.scamble2state(random_scramble)
@@ -58,6 +59,7 @@ if __name__ == '__main__':
     print(f"Phase1,2 Finished! ({time.time() - start:.5f} sec.)")
     if solution:
       print(f'Solution: "{solution}"')
+      print("solution_length: ", len(solution.split()))
     else:
       print("Solution not found.")
 

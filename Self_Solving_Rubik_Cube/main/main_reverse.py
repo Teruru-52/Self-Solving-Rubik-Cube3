@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     """scrambled_stateの生成"""
     """1. 完成状態からrandomに回してstateを求める場合"""
-    random_scramble = "L D2 U2 B2 F2 R U B2 U2 L2 D L2 R2 U' F2 D2 R2 D' F2 R2"
+    random_scramble = "U L D B L R' D' R' B' L U F2 U' R2 U2 L2 U' F2 D F2 U R2 U U' B' L2 D2 B U2 B L' U' F L2 U' F2 U R2 F2 L2 D' B2 U' R2 D F2 R2"
     scrambled_state = state.scamble2state(random_scramble)
 
     """Phase2探索プログラムの動作確認"""

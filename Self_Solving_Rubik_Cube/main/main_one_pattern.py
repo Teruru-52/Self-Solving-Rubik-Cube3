@@ -18,21 +18,20 @@ if __name__ == '__main__':
     # 2回繰り返すと元に戻る
     # mode = 'checker'
     # mode = 'checker2'
-    # mode = 'H'
+    mode = 'H'
     # mode = 'vertical_stripe'
     # 3回繰り返すと元に戻る
     # mode = 'heso'
-    mode = 'checker3'
+    # mode = 'checker3'
     # mode = 'cubeincube'
     # mode = 'mini_cubeincube'
     # mode = 'cubeincubeincube'
-    # 6回繰り返すと元に戻る
-    # mode = 'T'
-    # mode = 'vortex'
-    
     # mode = 'angel_fish'
     # mode = 'convex'
     # mode = 'ring'
+    # 6回繰り返すと元に戻る
+    # mode = 'T'
+    # mode = 'vortex'
 
     """scrambled_stateの生成"""
     """1.1 6面同色状態から模様の状態にする"""
@@ -54,6 +53,7 @@ if __name__ == '__main__':
     print(f"Phase1,2 Finished! ({time.time() - start:.5f} sec.)")
     if solution:
       print(f'Solution: "{solution}"')
+      print("solution_length: ", len(solution.split()))
     else:
       print("Solution not found.")
 

@@ -2,6 +2,7 @@ import random
 from shutil import move
 from functools import lru_cache
 from algorithm import detect_color
+import copy
 
 class State:
     """
@@ -25,7 +26,7 @@ class State:
         return State(new_cp, new_co, new_ep, new_eo)
 
 # 6面同色状態を表すインスタンス
-initial_state = State(
+normal_state = State(
     [0, 1, 2, 3, 4, 5, 6, 7],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
@@ -53,7 +54,7 @@ heso_color_state = detect_color.ColorState(
     [['Y','B'], ['Y','G'], ['W','G'], ['W','B'], ['R','Y'], ['R','G'], ['R','W'], ['R','B'], ['O','Y'], ['O','G'], ['O','W'], ['O','B']]
 )
 H_color_state = detect_color.ColorState(
-    [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']],
+    normal_color_state.cc,
     [['B','R'], ['B','O'], ['G','O'], ['G','R'], ['W','G'], ['Y','R'], ['W','B'], ['Y','O'], ['Y','G'], ['W','R'], ['Y','B'], ['W','O']]
 )
 T_color_state = detect_color.ColorState(
@@ -81,69 +82,76 @@ vertical_stripe_color_state = detect_color.ColorState(
     [['R','B'], ['O','B'], ['O','G'], ['R','G'], ['W','B'], ['W','R'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['Y','G'], ['Y','O']]
 )
 angel_fish_color_state = detect_color.ColorState(
-    [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']],
+    normal_color_state.cc,
     [['B','O'], ['W','B'], ['G','R'], ['G','O'], ['R','W'], ['R','B'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['Y','G'], ['Y','O']]
 )
 convex_color_state = detect_color.ColorState(
-    [['W','O','B'], ['W','B','R'], ['W','R','G'], ['W','G','O'], ['Y','B','O'], ['Y','R','B'], ['Y','G','R'], ['Y','O','G']],
+    normal_color_state.cc,
     [['W','G'], ['B','R'], ['G','R'], ['O','Y'], ['W','B'], ['W','R'], ['R','Y'], ['W','O'], ['Y','B'], ['O','B'], ['G','O'], ['G','Y']]
 )
 ring_color_state = detect_color.ColorState(
     [['B','Y','R'], ['B','R','W'], ['B','W','O'], ['B','O','Y'], ['G','R','Y'], ['G','W','R'], ['G','O','W'], ['G','Y','O']],
     [['B','O'], ['R','W'], ['G','R'], ['O','Y'], ['B','R'], ['B','W'], ['W','G'], ['W','O'], ['Y','B'], ['Y','R'], ['G','O'], ['G','Y']]
 )
-solved_color_state = normal_color_state
 
 def Set_state(mode): 
     if mode == 'normal':
-        color_state = normal_color_state
+        color_state = copy.deepcopy(normal_color_state)
     elif mode == 'checker':
-        color_state = checker_color_state
+        color_state = copy.deepcopy(checker_color_state)
     elif mode == 'checker2':
-        color_state = checker2_color_state
+        color_state = copy.deepcopy(checker2_color_state)
     elif mode == 'checker3':
-        color_state = checker3_color_state
+        color_state = copy.deepcopy(checker3_color_state)
     elif mode == 'heso':
-        color_state = heso_color_state
+        color_state = copy.deepcopy(heso_color_state)
     elif mode == 'H':
-        color_state = H_color_state
+        color_state = copy.deepcopy(H_color_state)
     elif mode == 'T':
-        color_state = T_color_state
+        color_state = copy.deepcopy(T_color_state)
     elif mode == 'cubeincube':
-        color_state = cubeincube_color_state
+        color_state = copy.deepcopy(cubeincube_color_state)
     elif mode == 'mini_cubeincube':
-        color_state = mini_cubeincube_color_state
+        color_state = copy.deepcopy(mini_cubeincube_color_state)
     elif mode == 'cubeincubeincube':
-        color_state = cubeincubeincube_color_state
+        color_state = copy.deepcopy(cubeincubeincube_color_state)
     elif mode == 'vortex': 
-        color_state = vortex_color_state
+        color_state = copy.deepcopy(vortex_color_state)
     elif mode == 'vertical_stripe':
-        color_state = vertical_stripe_color_state
+        color_state = copy.deepcopy(vertical_stripe_color_state)
     elif mode == 'angel_fish':
-        color_state = angel_fish_color_state
+        color_state = copy.deepcopy(angel_fish_color_state)
     elif mode == 'convex':
-        color_state = convex_color_state
+        color_state = copy.deepcopy(convex_color_state)
     elif mode == 'ring':
-        color_state = ring_color_state
+        color_state = copy.deepcopy(ring_color_state)
+    else:
+        print("not mode name")
+    # print("set_cc =", color_state.cc)
+    # print("set_ec =", color_state.ec)
     return color_state
 
 # 次の状態を完成状態としたときの各modeの状態を求める
 def Set_next_state(cur_mode, next_mode):
-    print("mode: ", next_mode)
     current_color_state = Set_state(cur_mode)
-    next_color_state = Set_state(next_mode)
-    initial_state = color2state(current_color_state, next_color_state)
+    initial_state = Set_solved_state(current_color_state, next_mode)
+    # print("current_cc =", current_color_state.cc)
+    # print("current_ec =", current_color_state.ec)
     return initial_state
 
 # 画像からの色状態と各modeの色状態から，各modeの状態を求める
-def Set_solved_state(mode, current_color_state):
-    print("mode: ", mode)
-    solved_color_state = Set_state(mode)
+def Set_solved_state(current_color_state, next_mode):
+    print("mode: ", next_mode)
+    solved_color_state = Set_state(next_mode)
+    # print("current_cc =", current_color_state.cc)
+    # print("current_ec =", current_color_state.ec)
+    # print("solved_cc =", solved_color_state.cc)
+    # print("solved_ec =", solved_color_state.ec)
     initial_state = color2state(current_color_state, solved_color_state)
-    print("cp =", initial_state.cp)
-    print("co =", initial_state.co)
-    print("ep =", initial_state.ep)
-    print("eo =", initial_state.eo)
+    # print("cp =", initial_state.cp)
+    # print("co =", initial_state.co)
+    # print("ep =", initial_state.ep)
+    # print("eo =", initial_state.eo)
     return initial_state
 
 # 18種類の1手操作を全部定義する
@@ -185,7 +193,7 @@ def scamble2state(scramble):
     """
     スクランブル文字列適用したstateを返す
     """
-    scrambled_state = initial_state
+    scrambled_state = normal_state
     for move_name in scramble.split(" "):
         move_state = moves[move_name]
         scrambled_state = scrambled_state.apply_move(move_state)
@@ -222,37 +230,52 @@ def Create_scramble(scramble_length):
     random_scramble = ""
     prev_move = None
     for _ in range(scramble_length):
-        flag = True
-        while flag is True:
+        while True:
             move_name = random.choice(move_names.split())
             if is_move_available(prev_move, move_name):
                 random_scramble += move_name + " "
                 prev_move = move_name
-                flag = False
+                break
     return random_scramble.strip()
+
+def Select_mode(cur_mode):
+    mode_names = "normal H T checker vertical_stripe vortex heso checker2 cubeincube mini_cubeincube cubeincubeincube angel_fish convex ring checker3"
+    while True:
+        random_mode = random.choice(mode_names.split())
+        if cur_mode != random_mode:
+            break
+    return random_mode
+
+current_state = State(
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+)
 
 def color2state(current_color_state, solved_color_state):
     for i in range(8):
         for j in range(8):
             if set(current_color_state.cc[i]) == set(solved_color_state.cc[j]):
-                initial_state.cp[i] = j
+                current_state.cp[i] = j
                 if current_color_state.cc[i] == solved_color_state.cc[j]:
-                    initial_state.co[i] = 0
+                    current_state.co[i] = 0
+                    # print(f"co[{i}] = 0")
                 else:
                     tmp = current_color_state.cc[i].pop(0)
                     current_color_state.cc[i].append(tmp)
                     if current_color_state.cc[i] == solved_color_state.cc[j]:
-                        initial_state.co[i] = 1
+                        current_state.co[i] = 1
                     else:
-                        initial_state.co[i] = 2
-                continue
+                        current_state.co[i] = 2
+
     for i in range(12):
         for j in range(12):
             if set(current_color_state.ec[i]) == set(solved_color_state.ec[j]):
-                initial_state.ep[i] = j
+                current_state.ep[i] = j
                 if current_color_state.ec[i] == solved_color_state.ec[j]:
-                    initial_state.eo[i] = 0
+                    current_state.eo[i] = 0
                 else:
-                    initial_state.eo[i] = 1
-                continue
-    return initial_state
+                    current_state.eo[i] = 1
+                    
+    return current_state

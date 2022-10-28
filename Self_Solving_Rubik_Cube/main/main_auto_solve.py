@@ -14,7 +14,6 @@ if __name__ == '__main__':
     motor = motors.Motor()
 
     """完成状態の設定"""
-    # vortexは未検証
     mode = 'normal'
     # mode = 'checker'
     # mode = 'checker2'
@@ -25,13 +24,6 @@ if __name__ == '__main__':
     # mode = 'mini_cubeincube'
     # mode = 'T'
 
-    """randomに回す場合"""
-    # scramble_length = 40
-    # random_scramble = state.Create_scramble(scramble_length)
-    # print("random_scramble: ", random_scramble)
-    # print('start scrambling')
-    # motor.Solve(random_scramble)
-
     """Webcamで画像を撮影し, scrambled_stateを求める"""
     print('start detecting colors')
     detect_color.Detect_color_state('solve', 1)
@@ -41,7 +33,7 @@ if __name__ == '__main__':
     detect_color.Detect_color_state('solve', 3)
     motor.Solve("F' B'")
     color_state = detect_color.Get_color_state()
-    scrambled_state = state.Set_solved_state(mode, color_state)
+    scrambled_state = state.Set_solved_state(color_state, mode)
 
     """Phase2探索プログラムの動作確認"""
     search2 = search.Search2(scrambled_state)

@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from algorithm import knn
 from algorithm import usbVideoDevice
+import copy
 
 class ColorState:
     def __init__(self, cc, ec):
@@ -9,6 +10,11 @@ class ColorState:
         self.ec = ec
 
 color_state = ColorState(
+    [['','',''], ['','',''], ['','',''], ['','',''], ['','',''], ['','',''], ['','',''], ['','','']],
+    [['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['','']]
+)
+
+copy_color_state = ColorState(
     [['','',''], ['','',''], ['','',''], ['','',''], ['','',''], ['','',''], ['','',''], ['','','']],
     [['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['',''], ['','']]
 )
